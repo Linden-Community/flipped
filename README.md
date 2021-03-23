@@ -5,6 +5,8 @@ Warning This project is still pre-release and is not ready for production usage.
 
 # Structure
 
+![](./flipped-architecture.svg)
+
 * [POSS](./poss) A private OSS client
 * [MySpace](./myspace) A IPFS-backed cloud disk
 * [CSG](./csg) A cloud storage gateway
