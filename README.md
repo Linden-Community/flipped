@@ -1,32 +1,13 @@
-[TOC]
+A set of tools based on IPFS
 
-#### Disabled options
+Warning This project is still pre-release and is not ready for production usage.
 
-- TeX (Based on KaTeX);
-- Emoji;
-- Task lists;
-- HTML tags decode;
-- Flowchart and Sequence Diagram;
 
-#### Editor.md directory
+# Structure
 
-    editor.md/
-            lib/
-            css/
-            scss/
-            tests/
-            fonts/
-            images/
-            plugins/
-            examples/
-            languages/     
-            editormd.js
-            ...
+* [POSS](./poss) A private OSS client
+* [MySpace](./myspace) A IPFS-backed cloud disk
+* [CSG](./csg) A cloud storage gateway
+* [IPFS-cluster](./ipfs-cluster) A swarm of IPFS daemons for high availability
+* [Filecoin-backer](./filecoin-backer) Storage service based on Filecoin
 
-```html
-<!-- English -->
-<script src="../dist/js/languages/en.js"></script>
-
-<!-- 繁體中文 -->
-<script src="../dist/js/languages/zh-tw.js"></script>
-```
