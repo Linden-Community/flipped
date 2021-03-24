@@ -1,10 +1,14 @@
-![](./imgs/flipped-logo.png)
-A set of tools based on IPFS
+# flipped
 
-Warning This project is still pre-release and is not ready for production usage.
+![banner](./imgs/flipped-logo.png)
+A set of tools based on IPFS.
 
+*Warning* This project is still **pre-release** and is not ready for production usage.
 
-# Structure
+[![standard-readme compliant](https://img.shields.io/badge/standard--readme-OK-green.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
+TODO: Put more badges here.
+
+## Structure
 
 ![](./imgs/flipped-architecture.svg)
 
@@ -15,3 +19,16 @@ Warning This project is still pre-release and is not ready for production usage.
 * [IPFS-cluster](./ipfs-cluster) A swarm of IPFS daemons for high availability
 * [Filecoin-backer](./filecoin-backer) Storage service based on Filecoin
 
+## Maintainers
+
+[@do-nothing](https://github.com/do-nothing)
+
+## Contributing
+
+PRs accepted.
+
+Small note: If editing the README, please conform to the [standard-readme](https://github.com/RichardLitt/standard-readme) specification.
+
+## License
+
+MIT © 2021 Linden
