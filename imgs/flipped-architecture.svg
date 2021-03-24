@@ -1,0 +1,52 @@
+<svg viewBox="0 0 409 355" xmlns:xlink="http://www.w3.org/1999/xlink" height="355" width="409" xmlns="http://www.w3.org/2000/svg">
+    <defs/>
+    <g transform="translate(-75.44,-88.76)">
+        <path id="shape1" fill-rule="nonzero" transform="translate(76.44,89.76)" fill="#d8edcd" stroke="#d8edcd" d="M395.5,353.1C402.1,353.1,407.5,347.7,407.5,341.1L407.5,12.0C407.5,5.4,402.1,.0,395.5,.0L12.0,.0C5.4,.0,.0,5.4,.0,12.0L.0,341.1C.0,347.7,5.4,353.1,12.0,353.1L395.5,353.1z"/>
+        <path id="shape2" fill-rule="nonzero" transform="translate(99.12,384.77)" fill="#68a28c" stroke="#68a28c" d="M344.5,40.9C351.2,40.9,356.5,35.5,356.5,28.9L356.5,12.0C356.5,5.4,351.2,.0,344.5,.0L12.0,.0C5.4,.0,.0,5.4,.0,12.0L.0,28.9C.0,35.5,5.4,40.9,12.0,40.9L344.5,40.9z"/>
+        <g id="shape3" transform="translate(157.30,388.60)">
+            <text style="fill:#ffffff;font-family:Arial;font-size:14.00pt;font-weight:bold" xml:space="preserve">
+                <tspan x="51.4" y="24.1">Filecoin-backer</tspan>
+            </text>
+        </g>
+        <path id="shape4" fill-rule="nonzero" transform="translate(253.14,356.50)" fill="#68a28c" d="M16.6,.0L16.6,12.6L26.4,9.9L13.2,28.4L.0,9.9L9.8,12.6L9.8,.0L16.6,.0"/>
+        <path id="shape5" fill-rule="nonzero" transform="matrix(-1.00,-0.00,0.00,-1.00,313.6,384.9)" fill="#68a28c" d="M16.6,.0L16.6,12.6L26.4,9.9L13.2,28.4L.0,9.9L9.8,12.6L9.8,.0L16.6,.0"/>
+        <path id="shape6" fill-rule="nonzero" transform="translate(99.12,316.36)" fill="#68a28c" stroke="#68a28c" d="M344.5,40.9C351.2,40.9,356.5,35.5,356.5,28.9L356.5,12.0C356.5,5.4,351.2,.0,344.5,.0L12.0,.0C5.4,.0,.0,5.4,.0,12.0L.0,28.9C.0,35.5,5.4,40.9,12.0,40.9L344.5,40.9z"/>
+        <g id="shape7" transform="translate(193.24,320.19)">
+            <text style="fill:#ffffff;font-family:Arial;font-size:14.00pt;font-weight:bold" xml:space="preserve">
+                <tspan x="26.7" y="24.1">IPFS Cluster</tspan>
+            </text>
+        </g>
+        <path id="shape8" fill-rule="nonzero" transform="translate(99.12,247.58)" fill="#68a28c" stroke="#68a28c" d="M344.5,40.9C351.2,40.9,356.5,35.5,356.5,28.9L356.5,12.0C356.5,5.4,351.2,.0,344.5,.0L12.0,.0C5.4,.0,.0,5.4,.0,12.0L.0,28.9C.0,35.5,5.4,40.9,12.0,40.9L344.5,40.9z"/>
+        <g id="shape9" transform="translate(136.35,251.40)">
+            <text style="fill:#ffffff;font-family:Arial;font-size:14.00pt;font-weight:bold" xml:space="preserve">
+                <tspan x="34.8" y="24.1">Cloud Storage Gateway</tspan>
+            </text>
+        </g>
+        <path id="shape10" fill-rule="nonzero" transform="translate(253.14,288.22)" fill="#68a28c" d="M16.6,.0L16.6,12.6L26.4,9.9L13.2,28.4L.0,9.9L9.8,12.6L9.8,.0L16.6,.0"/>
+        <path id="shape11" fill-rule="nonzero" transform="matrix(-1.00,-0.00,0.00,-1.00,313.6,316.6)" fill="#68a28c" d="M16.6,.0L16.6,12.6L26.4,9.9L13.2,28.4L.0,9.9L9.8,12.6L9.8,.0L16.6,.0"/>
+        <path id="shape12" fill-rule="nonzero" transform="translate(103.66,124.04)" fill="#68a28c" stroke="#68a28c" d="M94.2,77.0C100.8,77.0,106.2,71.6,106.2,65.0L106.2,12.0C106.2,5.4,100.8,.0,94.2,.0L12.0,.0C5.4,.0,.0,5.4,.0,12.0L.0,65.0C.0,71.6,5.4,77.0,12.0,77.0L94.2,77.0z"/>
+        <g id="shape13" transform="translate(103.66,145.91)">
+            <text style="fill:#ffffff;font-family:Arial;font-size:14.00pt;font-weight:bold" xml:space="preserve">
+                <tspan x="26.1" y="24.1">POSS</tspan>
+            </text>
+        </g>
+        <path id="shape14" fill-rule="nonzero" transform="translate(126.52,206.66)" fill="#68a28c" d="M16.6,.0L16.6,20.9L26.4,18.3L13.2,36.8L.0,18.3L9.8,20.9L9.8,.0L16.6,.0"/>
+        <path id="shape15" fill-rule="nonzero" transform="matrix(-1.00,-0.00,0.00,-1.00,187.0,243.4)" fill="#68a28c" d="M16.6,.0L16.6,20.9L26.4,18.3L13.2,36.8L.0,18.3L9.8,20.9L9.8,.0L16.6,.0"/>
+        <path id="shape16" fill-rule="nonzero" transform="translate(224.29,124.04)" fill="#68a28c" stroke="#68a28c" d="M94.2,77.0C100.8,77.0,106.2,71.6,106.2,65.0L106.2,12.0C106.2,5.4,100.8,.0,94.2,.0L12.0,.0C5.4,.0,.0,5.4,.0,12.0L.0,65.0C.0,71.6,5.4,77.0,12.0,77.0L94.2,77.0z"/>
+        <g id="shape17" transform="translate(224.29,145.91)">
+            <text style="fill:#ffffff;font-family:Arial;font-size:14.00pt;font-weight:bold" xml:space="preserve">
+                <tspan x="10.1" y="24.5">MySpace</tspan>
+            </text>
+        </g>
+        <path id="shape18" fill-rule="nonzero" transform="translate(247.15,206.66)" fill="#68a28c" d="M16.6,.0L16.6,20.9L26.4,18.3L13.2,36.8L.0,18.3L9.8,20.9L9.8,.0L16.6,.0"/>
+        <path id="shape19" fill-rule="nonzero" transform="matrix(-1.00,-0.00,0.00,-1.00,307.6,243.4)" fill="#68a28c" d="M16.6,.0L16.6,20.9L26.4,18.3L13.2,36.8L.0,18.3L9.8,20.9L9.8,.0L16.6,.0"/>
+        <path id="shape20" fill-rule="nonzero" transform="translate(349.46,124.04)" fill="#68a28c" stroke="#68a28c" d="M94.2,77.0C100.8,77.0,106.2,71.6,106.2,65.0L106.2,12.0C106.2,5.4,100.8,.0,94.2,.0L12.0,.0C5.4,.0,.0,5.4,.0,12.0L.0,65.0C.0,71.6,5.4,77.0,12.0,77.0L94.2,77.0z"/>
+        <g id="shape21" transform="translate(349.46,145.91)">
+            <text style="fill:#ffffff;font-family:Arial;font-size:14.00pt;font-weight:bold" xml:space="preserve">
+                <tspan x="8.1" y="24.5">LD-Mirror</tspan>
+            </text>
+        </g>
+        <path id="shape22" fill-rule="nonzero" transform="translate(372.31,206.66)" fill="#68a28c" d="M16.6,.0L16.6,20.9L26.4,18.3L13.2,36.8L.0,18.3L9.8,20.9L9.8,.0L16.6,.0"/>
+        <path id="shape23" fill-rule="nonzero" transform="matrix(-1.00,-0.00,0.00,-1.00,432.8,243.4)" fill="#68a28c" d="M16.6,.0L16.6,20.9L26.4,18.3L13.2,36.8L.0,18.3L9.8,20.9L9.8,.0L16.6,.0"/>
+    </g>
+</svg>
