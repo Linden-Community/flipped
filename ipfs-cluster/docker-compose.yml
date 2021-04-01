@@ -19,7 +19,7 @@ services:
       - 5001:5001
       - 8081:8080
     volumes:
-      - ~/ipfs0:/data/ipfs
+      - ~/ipfs1:/data/ipfs
   ipfs2:
     restart: always
     image: ipfs/go-ipfs:v0.8.0
@@ -27,4 +27,4 @@ services:
     ports:
       - 4002:4001
     volumes:
-      - ~/ipfs0:/data/ipfs
+      - ~/ipfs2:/data/ipfs

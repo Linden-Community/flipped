@@ -16,11 +16,22 @@ IPFS cluster based on slice and pin Technology.
 ## Install
 
 ```
+cd ~
+wget https://raw.githubusercontent.com/Linden-Community/flipped/main/ipfs-cluster/docker-compose.yml
+docker-compose up -d
+
+# set system command alias
+echo "alias ipfs0='docker exec ipfs0 ipfs'" >> .bashrc
+echo "alias ipfs1='docker exec ipfs1 ipfs'" >> .bashrc
+echo "alias ipfs2='docker exec ipfs2 ipfs'" >> .bashrc
+. .bashrc
 ```
 
 ## Usage
 
 ```
+ipfs0 id
+ipfs0 swarm peers
 ```
 
 ## Maintainers
