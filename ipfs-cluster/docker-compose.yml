@@ -1,0 +1,12 @@
+version: "3.7"
+services:
+  ipfs0:
+    restart: always
+    image: ipfs/go-ipfs:v0.8.0
+    container_name: ipfs0
+    ports:
+      - 4001:4001
+      - 5001:5001
+      - 8001:8001
+    volumes:
+      - ./ipfs0:/data/ipfs

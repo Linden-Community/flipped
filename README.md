@@ -15,7 +15,7 @@ A set of tools based on IPFS.
 ![](./imgs/flipped-architecture.svg)
 
 * [POSS](./poss) A private OSS client
-* [MySpace](./myspace) A IPFS-backed cloud disk
+* [MySpace](./myspace) An IPFS-backed cloud disk
 * [LD-Mirror](./ld-mirror) docker,git,maven,npm,apt-get resository for developers
 * [CSG](./csg) Cloud storage gateway
 * [IPFS-cluster](./ipfs-cluster) A swarm of IPFS daemons for high availability
