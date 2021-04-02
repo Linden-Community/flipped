@@ -16,11 +16,13 @@ A private OSS client based on IPFS.
 ## Install
 
 ```
+npm install --save ipfs-http-client
 ```
 
 ## Usage
 
 ```
+node addFile
 ```
 
 ## Maintainers

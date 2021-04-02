@@ -17,6 +17,10 @@ Focus on access control, CORS, blacklist, storage logs, statistical analysis, BI
 ## Install
 
 ```
+git clone https://github.com/Linden-Community/flipped.git
+cd flipped/csg/
+
+docker-compose up -d
 ```
 
 ## Usage
