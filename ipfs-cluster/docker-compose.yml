@@ -5,9 +5,7 @@ services:
     image: ipfs/go-ipfs:v0.8.0
     container_name: ipfs0
     ports:
-      - 4000:4001
-      - 5000:5001
-      - 8080:8080
+      - 4000:4000
     volumes:
       - ~/ipfs0:/data/ipfs
   ipfs1:
@@ -16,8 +14,6 @@ services:
     container_name: ipfs1
     ports:
       - 4001:4001
-      - 5001:5001
-      - 8081:8080
     volumes:
       - ~/ipfs1:/data/ipfs
   ipfs2:
@@ -25,6 +21,9 @@ services:
     image: ipfs/go-ipfs:v0.8.0
     container_name: ipfs2
     ports:
-      - 4002:4001
+      - 4002:4002
     volumes:
       - ~/ipfs2:/data/ipfs
+networks:
+  default:
+    name: flipped_default

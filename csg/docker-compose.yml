@@ -1,0 +1,16 @@
+version: "3.7"
+services:
+  nginx:
+    restart: always
+    image: nginx:mainline
+    container_name: nginx
+    volumes:
+     - ./nginx:/etc/nginx/conf.d
+    ports:
+     - 80:80
+     - 143:143
+    environment:
+     - TZ=Asia/Shanghai
+networks:
+  default:
+    name: flipped_default
