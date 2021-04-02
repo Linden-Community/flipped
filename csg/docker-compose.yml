@@ -5,7 +5,8 @@ services:
     image: nginx:mainline
     container_name: nginx
     volumes:
-     - ./nginx:/etc/nginx/conf.d
+     - ./nginx/conf.d:/etc/nginx/conf.d
+     - ./nginx/nginx.conf:/etc/nginx/nginx.conf
     ports:
      - 80:80
      - 143:143
