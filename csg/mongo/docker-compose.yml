@@ -1,0 +1,16 @@
+version: "3.7"
+services:
+  mongo:
+    image: mongo
+    restart: always
+    container_name: mongo
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    volumes:
+      - ./datadir:/data/db
+networks:
+  default:
+    name: flipped_default

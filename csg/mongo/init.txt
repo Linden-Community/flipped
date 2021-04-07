@@ -1,0 +1,2 @@
+use flipped
+db.createUser( {user: "linden",pwd: "xxx",roles: [ { role: "readWrite", db: "flipped" } ]})

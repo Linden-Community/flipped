@@ -1,0 +1,17 @@
+version: "3.7"
+services:
+  gateway1:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    image: registry.cn-beijing.aliyuncs.com/lj110119p/js-gateway:v0.1
+    container_name: gateway1
+    restart: always
+    ports:
+      - 6001:6001
+    environment:
+      - url=http://ipfs1:5001
+      - mongoPw=123456
+networks:
+  default:
+    name: flipped_default
