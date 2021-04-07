@@ -5,8 +5,7 @@ const apiProxy = httpProxy.createProxyServer();
 
 const args = process.argv.splice(2)
 const MongoClient = require('mongodb').MongoClient;
-const passwd = args[1] || "123456"
-const mongoUrl = "mongodb://linden:" + passwd + "@localhost:27017/flipped";
+const mongoUrl = args[1] || "mongodb://linden:123456@localhost:27017/flipped";
 const client = new MongoClient(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true });
 
 let cids;

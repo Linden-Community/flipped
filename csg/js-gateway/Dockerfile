@@ -6,4 +6,4 @@ COPY src src
 COPY package.json .
 COPY node_modules node_modules
 
-CMD node src/gateway ${url} ${mongoPw}
+CMD node src/gateway ${url} ${mongoUrl}

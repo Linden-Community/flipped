@@ -11,7 +11,7 @@ services:
       - 6001:6001
     environment:
       - url=http://ipfs1:5001
-      - mongoPw=123456
+      - mongoUrl=mongodb://linden:123456@localhost:27017/flipped
 networks:
   default:
     name: flipped_default
