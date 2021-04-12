@@ -10,8 +10,10 @@ services:
     ports:
       - 6001:6001
     environment:
-      - url=http://ipfs1:5001
-      - mongoUrl=mongodb://linden:123456@localhost:27017/flipped
+      - url=http://192.168.0.72:5001
+      - mongoUrl=mongodb://linden:123456@192.168.0.72:27017/flipped
+    volumes: 
+      - ./src:/opt/node/src
 networks:
   default:
     name: flipped_default

@@ -13,7 +13,7 @@ cache
 .cache
 
 # Dependency directory
-node_modules
+/node_modules
 
 # Build artefacts
 dist

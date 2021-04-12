@@ -5,14 +5,19 @@ const apiProxy = httpProxy.createProxyServer();
 
 const args = process.argv.splice(2)
 const MongoClient = require('mongodb').MongoClient;
-const mongoUrl = args[1] || "mongodb://linden:123456@localhost:27017/flipped";
+const mongoUrl = args[1] || "mongodb://linden:123456@192.168.0.72:27017/flipped";
 const client = new MongoClient(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true });
 
-let cids;
-client.connect(function(err, db) {
+const producer = require('./mq/producer');
+
+let cids
+client.connect(function (err, db) {
     if (err) throw err;
-    cids = db.db("flipped").collection("cids")
+    cids = db.db().collection("cids")
+    console.log("mongodb connect seccess.")
 });
+
+producer.init(args[1] || "111.19.254.170:9876")
 
 apiProxy.on('proxyRes', function (proxyRes, req, res) {
     proxyRes.on('data', function (dataBuffer) {
@@ -21,14 +26,17 @@ apiProxy.on('proxyRes', function (proxyRes, req, res) {
         json.api = req.path
         json.createAt = new Date()
         cids.insertOne(json)
-        console.log("res: " + JSON.stringify(json))
+
+        let jsonStr = JSON.stringify(json)
+        console.log("res: " + jsonStr)
+        producer.send(json.Hash, jsonStr)
     });
 });
 
 app.all("/*", function (req, res) {
     console.log("req:", req.path, new Date())
     apiProxy.web(req, res, {
-        target: args[0] || "http://localhost:5001"
+        target: args[0] || "http://192.168.0.72:5001"
     });
 });
 
