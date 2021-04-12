@@ -6,5 +6,5 @@ COPY src src
 COPY package.json .
 COPY node_modules node_modules
 
-#CMD node src/gateway ${url} ${mongoUrl}
-CMD sleep 36000
+CMD node src/gateway ${url} ${mongoUrl} ${mqServer}
+# CMD sleep 36000

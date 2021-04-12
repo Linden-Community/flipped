@@ -17,7 +17,7 @@ client.connect(function (err, db) {
     console.log("mongodb connect seccess.")
 });
 
-producer.init(args[1] || "111.19.254.170:9876")
+producer.init(args[2] || "111.19.254.170:9876")
 
 apiProxy.on('proxyRes', function (proxyRes, req, res) {
     proxyRes.on('data', function (dataBuffer) {
