@@ -1,0 +1,18 @@
+version: "3.7"
+services:
+  pinner:
+    build:
+      context: ../
+      dockerfile: Dockerfile_pinner
+    image: registry.cn-beijing.aliyuncs.com/lj110119p/pinner:v0.1
+    container_name: pinner
+    restart: always
+    environment:
+      - url=http://192.168.0.72:5001
+      - mqServer=111.19.254.170:9876
+    volumes: 
+      - ./src:/opt/node/src
+      - ../mq:/opt/node/mq
+networks:
+  default:
+    name: flipped_default
