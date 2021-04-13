@@ -1,0 +1,10 @@
+FROM node:10-buster
+
+RUN mkdir -p /opt/node
+WORKDIR /opt/node
+COPY js-gateway/src src 
+COPY js-gateway/node_modules node_modules
+COPY mq mq
+
+CMD node src/gateway ${url} ${mongoUrl} ${mqServer}
+# CMD sleep 36000

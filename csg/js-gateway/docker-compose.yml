@@ -2,8 +2,8 @@ version: "3.7"
 services:
   gateway1:
     build:
-      context: ./
-      dockerfile: Dockerfile
+      context: ../
+      dockerfile: Dockerfile_gateway
     image: registry.cn-beijing.aliyuncs.com/lj110119p/js-gateway:v0.1
     container_name: gateway1
     restart: always

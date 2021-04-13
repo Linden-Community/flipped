@@ -8,7 +8,7 @@ const MongoClient = require('mongodb').MongoClient;
 const mongoUrl = args[1] || "mongodb://linden:123456@192.168.0.72:27017/flipped";
 const client = new MongoClient(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true });
 
-const producer = require('./mq/producer');
+const producer = require('../mq/producer');
 
 let cids
 client.connect(function (err, db) {
@@ -23,7 +23,7 @@ apiProxy.on('proxyRes', function (proxyRes, req, res) {
     proxyRes.on('data', function (dataBuffer) {
         let str = dataBuffer.toString('utf8')
         let json = JSON.parse(str)
-        json.api = req.path
+        json.api = res.url
         json.createAt = new Date()
         cids.insertOne(json)
 
@@ -33,8 +33,10 @@ apiProxy.on('proxyRes', function (proxyRes, req, res) {
     });
 });
 
-app.all("/*", function (req, res) {
-    console.log("req:", req.path, new Date())
+app.all("/add/*", function (req, res) {
+    console.log("req:", req.url, new Date())
+    res.url = req.url
+    req.url = '/api/v0/add'
     apiProxy.web(req, res, {
         target: args[0] || "http://192.168.0.72:5001"
     });
