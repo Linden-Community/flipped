@@ -6,6 +6,7 @@ const apiProxy = httpProxy.createProxyServer();
 const args = process.argv.splice(2)
 const MongoClient = require('mongodb').MongoClient;
 const mongoUrl = args[1] || "mongodb://linden:123456@192.168.0.72:27017/flipped";
+const proxyTarget = args[0] || "http://192.168.0.72:5001"
 const client = new MongoClient(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true });
 
 const producer = require('../mq/producer');
@@ -25,6 +26,9 @@ apiProxy.on('proxyRes', function (proxyRes, req, res) {
         let json = JSON.parse(str)
         json.api = res.url
         json.createAt = new Date()
+        json.target = proxyTarget
+        json.from = req.headers['x-forwarded-for'] || req.socket.remoteAddress
+
         cids.insertOne(json)
 
         let jsonStr = JSON.stringify(json)
@@ -38,7 +42,7 @@ app.all("/v1/add/*", function (req, res) {
     res.url = req.url
     req.url = '/api/v0/add'
     apiProxy.web(req, res, {
-        target: args[0] || "http://192.168.0.72:5001"
+        target: proxyTarget
     });
 });
 

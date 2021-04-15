@@ -1,5 +1,19 @@
 {
   "dependencies": {
     "ipfs-http-client": "^49.0.4"
-  }
+  },
+  "name": "linden-poss",
+  "description": "[![standard-readme compliant](https://img.shields.io/badge/standard--readme-OK-green.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme) TODO: Put more badges here.",
+  "version": "0.1.1",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [
+    "poss",
+    "oss"
+  ],
+  "author": "lj110119",
+  "license": "ISC"
 }
