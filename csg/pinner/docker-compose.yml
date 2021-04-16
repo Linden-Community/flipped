@@ -1,12 +1,18 @@
 version: "3.7"
 services:
   pinner:
+    build:
+      context: ../
+      dockerfile: Dockerfile_pinner
     image: $env_image
     container_name: pinner
     restart: always
     environment:
       - url=http://ipfs1:5001
       - mqServer=$env_mqServer
+    volumes: 
+      - ./src:/opt/node/src
+      - ../mq:/opt/node/mq
 networks:
   default:
     name: flipped_default

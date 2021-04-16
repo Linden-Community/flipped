@@ -2,6 +2,9 @@ version: "3.7"
 
 services:
   gateway0:
+    build:
+      context: ../
+      dockerfile: Dockerfile_gateway
     image: $env_image
     container_name: gateway0
     restart: always

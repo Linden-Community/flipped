@@ -37,7 +37,7 @@ apiProxy.on('proxyRes', function (proxyRes, req, res) {
     });
 });
 
-app.all("/v1/add/*", function (req, res) {
+app.all("/v1", function (req, res) {
     console.log("req:", req.url, new Date())
     res.url = req.url
     req.url = '/api/v0/add'
