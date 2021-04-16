@@ -1,20 +1,34 @@
 version: "3.7"
+
 services:
+  gateway0:
+    image: $env_image
+    container_name: gateway0
+    restart: always
+    environment:
+      - url=http://ipfs0:5001
+      - mongoUrl=$env_mongoUrl
+      - mqServer=$env_mqServer
   gateway1:
-    build:
-      context: ../
-      dockerfile: Dockerfile_gateway
-    image: registry.cn-beijing.aliyuncs.com/lj110119p/js-gateway:v0.1
+    image: $env_image
     container_name: gateway1
     restart: always
     ports:
       - 6001:6001
     environment:
-      - url=http://192.168.0.72:5001
-      - mongoUrl=mongodb://linden:123456@192.168.0.72:27017/flipped
-      - mqServer=111.19.254.170:9876
-    volumes: 
-      - ./src:/opt/node/src
+      - url=http://ipfs1:5001
+      - mongoUrl=$env_mongoUrl
+      - mqServer=$env_mqServer
+  gateway2:
+    image: $env_image
+    container_name: gateway2
+    restart: always
+    environment:
+      - url=http://ipfs2:5001
+      - mongoUrl=$env_mongoUrl
+      - mqServer=$env_mqServer
 networks:
   default:
     name: flipped_default
+
+
