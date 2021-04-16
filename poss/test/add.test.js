@@ -1,13 +1,26 @@
+const assert = require('assert').strict;
 const createClient = require('../src/index')
-const client = createClient.create({ clientID: 'linden' })
 
-async function main() {
+describe('.add', function () {
+    this.timeout(60 * 1000)
 
-    const obj = await client.add.data('Hello world!1234565')
-    console.log('Added file contents:', obj)
+    let client
 
-    const obj1 = await client.add.file('c:/Users/xieyu/Pictures/94156e5566c82ae7233655505653d674.mp4')
-    console.log('Added file contents:', obj1.cid)
-}
+    before(() => {
+        client = createClient.create()
+    })
 
-main()
+    it('add data', async () => {
+        const res = await client.add.data('Hello world!1234565')
+        // console.log('Added file contents:', res)
+
+        assert(res.cid == "QmebsgayqHpYSzSGZDZLu8dhkfyu1j1EBKseqit1gyvaqc", "add data error.")
+    })
+
+    it('add file', async () => {
+        const res = await client.add.file('c:/Users/xieyu/Pictures/94156e5566c82ae7233655505653d674.mp4')
+        // console.log('Added file contents:', res.cid)
+
+        assert(res.cid == "QmTtwQFX85t9VdJpCRqB2ZdKxTaNiKpY9QRLrA8f1TpFkL", "add file error.")
+    })
+})

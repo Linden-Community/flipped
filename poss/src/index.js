@@ -11,7 +11,7 @@ const urlSource = require('ipfs-utils/src/files/url-source')
 function create(options = {}) {
     const client = {
         add: require('./add')(options),
-        // get: require('./get')(options),
+        get: require('./get')(options),
         // aes: require('./ase')(options),
     }
 
