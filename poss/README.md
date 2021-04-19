@@ -16,12 +16,35 @@ A private OSS client based on IPFS.
 ## Install
 
 ```
+npm install --save linden-poss
 
 ```
 
 ## Usage
 
 ```
+const createClient = require('linden-poss');
+const client = createClient.create({ clientID: "XXXXXX" });
+
+// add data
+(async function(){
+    const res = await client.add.data('Hello world!')
+    console.log('Added data contents:', res)
+})();
+
+// add file
+(async function(){
+    const res = await client.add.file('c:/Users/xieyu/Pictures/94156e5566c82ae7233655505653d674.mp4')
+    console.log('Added file:', res)
+})();
+
+//get data
+(async function() {
+    for await (const chunk of client.get.data("QmebsgayqHpYSzSGZDZLu8dhkfyu1j1EBKseqit1gyvaqc")) {
+        console.info('geted data:', chunk.toString())
+    }
+})();
+
 
 ```
 

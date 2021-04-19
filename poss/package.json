@@ -4,8 +4,8 @@
   },
   "name": "linden-poss",
   "description": "[![standard-readme compliant](https://img.shields.io/badge/standard--readme-OK-green.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme) TODO: Put more badges here.",
-  "version": "0.1.1",
-  "main": "index.js",
+  "version": "0.1.2",
+  "main": "src/index.js",
   "devDependencies": {},
   "scripts": {
     "test": "mocha"
@@ -15,5 +15,5 @@
     "oss"
   ],
   "author": "lj110119",
-  "license": "ISC"
+  "license": "MIT"
 }
