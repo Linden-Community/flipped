@@ -13,6 +13,7 @@ function create(options = {}) {
     const client = {
         add: require('./add')(options),
         get: require('./get')(options),
+        dag: require('./dag')(options),
         // aes: require('./ase')(options),
     }
 
