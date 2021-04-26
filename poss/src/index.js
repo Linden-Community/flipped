@@ -14,7 +14,7 @@ function create(options = {}) {
         add: require('./add')(options),
         get: require('./get')(options),
         dag: require('./dag')(options),
-        // aes: require('./ase')(options),
+        aes: require('./aes'),
     }
 
     return client
