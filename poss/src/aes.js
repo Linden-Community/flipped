@@ -1,6 +1,7 @@
 'use strict'
 
 const ecc = require('eosjs-ecc');
+const Long = require("long");
 
 const CryptoHelper = {
     createPrivateKey: async function () {
@@ -14,7 +15,9 @@ const CryptoHelper = {
         return ecc.Aes.encrypt(myPrivate, someonesPublicKey, message)
     },
     decrypt: function (someonesPrivateKey, myPublic, encryptedMessage) {
-        return ecc.Aes.decrypt(someonesPrivateKey, myPublic, encryptedMessage.nonce, encryptedMessage.message, encryptedMessage.checksum)
+        let nonce = encryptedMessage.nonce
+        nonce = new Long(nonce.low, nonce.high, nonce.unsigned)
+        return ecc.Aes.decrypt(someonesPrivateKey, myPublic, nonce, encryptedMessage.message, encryptedMessage.checksum)
     }
 }
 
