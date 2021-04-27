@@ -1,7 +1,8 @@
 'use strict'
 
 const createClient = require('ipfs-http-client')
-const { globSource } = createClient
+const ipldDagPb = require('ipld-dag-pb')
+const { DAGNode } = ipldDagPb
 
 const aes = require("./aes")
 
@@ -11,7 +12,7 @@ module.exports = (options) => {
 
   const addData = async function (privateKey, publicKey, data) {
     const encryptData = aes.encrypt(privateKey, publicKey, data)
-    const rst = await client.dag.put(encryptData, { format: 'dag-cbor', hashAlg: 'sha2-256' })
+    const rst = await client.dag.put(encryptData, { format: 'dag-cbor', hashAlg: 'sha2-256', pin: true })
     return rst
   }
 
@@ -22,11 +23,21 @@ module.exports = (options) => {
     return data
   }
 
+  const addFile = async function (privateKey, publicKey, data, encryptKey) {
+    let encryptInfo = aes.encrypt(privateKey, publicKey, encryptKey)
+    let saveDate = new DAGNode('v0')
+    saveDate.addLink(data)
+    saveDate.encryptInfo = encryptInfo
+    const rst = await client.dag.put(saveDate, { format: 'dag-cbor', hashAlg: 'sha2-256', pin: true })
+    return rst
+  }
+
   const dag = {
     put: client.dag.put,
     get: client.dag.get,
     addData: addData,
-    getData: getData
+    getData: getData,
+    addFile: addFile
   }
 
   return dag
