@@ -5,10 +5,10 @@ describe('.dag', function () {
     let client
 
     before(() => {
-        client = createClient.create()
+        client = createClient.create({ url: "http://192.168.0.91:6001/poss/v1/test" })
     })
 
-    it('should be able to put and get a DAG node with format dag-cbor', async () => {
+    it('test dag-cbor', async () => {
         const cbor = { 'foo': 'dag-cbor-bar' }
         let cid = await client.dag.put(cbor, { format: 'dag-cbor', hashAlg: 'sha2-256' })
 
@@ -25,20 +25,29 @@ describe('.dag', function () {
         console.log(result.value)
     })
 
-    it("add data", async () => {
+    it('add data', async () => {
         const msg = "abcd1234"
         const privateKey = "5KQayTDGKgWPZjEehoQxQDvqVuNgiVXYkzsgAcg72P36Qr1AMzG"
         const publicKey = "EOS5Rm1VBzzHMM7qD3xCBUFh9qGfpUi9eJcgzaLoiKHGdHBD8erqa"
         let cid = await client.dag.addData(privateKey, publicKey, msg)
         console.log(cid.codec)
-        console.log(cid.toBaseEncodedString('base32'))
+        console.log(cid.toV1().toBaseEncodedString('base32'))
     })
 
-    it("get data", async () => {
-        const cid = "bafyreiclat55u2hriugc73fbujpy6a33i2piwoeuv6sxk2tfe65vzgqujm"
+    it('get data', async () => {
+        const cid = "bafyreihhvhjaojikaf77uo2rwgur7goxcbcdwgvzo3aoai2pwbzv6sk46u"
         const privateKey = "5KQayTDGKgWPZjEehoQxQDvqVuNgiVXYkzsgAcg72P36Qr1AMzG"
         const publicKey = "EOS5Rm1VBzzHMM7qD3xCBUFh9qGfpUi9eJcgzaLoiKHGdHBD8erqa"
         let data = await client.dag.getData(privateKey, publicKey, cid)
         console.log(data.toString())
+    })
+
+    it("add file", async () => {
+        const data = { "cid": "QmTgKghvimxUPwVPiTwgiATDQhqUxcWrm1bM6M2cdK7ycM", "Name": "aaa.txt", "size": 15 }
+        const privateKey = "5KQayTDGKgWPZjEehoQxQDvqVuNgiVXYkzsgAcg72P36Qr1AMzG"
+        const publicKey = "EOS5Rm1VBzzHMM7qD3xCBUFh9qGfpUi9eJcgzaLoiKHGdHBD8erqa"
+        let cid = await client.dag.addFile(privateKey, publicKey, data, "sldkjfei")
+        console.log(cid.codec)
+        console.log(cid.toV1().toBaseEncodedString('base32'))
     })
 })
