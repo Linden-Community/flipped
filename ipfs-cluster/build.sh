@@ -1,0 +1,1 @@
+docker build -t ipfs-pubsub:v0.8.0 .

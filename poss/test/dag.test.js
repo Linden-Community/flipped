@@ -5,7 +5,7 @@ describe('.dag', function () {
     let client
 
     before(() => {
-        client = createClient.create({ url: "http://192.168.0.91:6001/poss/v1/test" })
+        client = createClient.create()
     })
 
     it('test dag-cbor', async () => {
@@ -25,17 +25,17 @@ describe('.dag', function () {
         console.log(result.value)
     })
 
+    let cid = "bafyreihhvhjaojikaf77uo2rwgur7goxcbcdwgvzo3aoai2pwbzv6sk46u"
     it('add data', async () => {
         const msg = "abcd1234"
         const privateKey = "5KQayTDGKgWPZjEehoQxQDvqVuNgiVXYkzsgAcg72P36Qr1AMzG"
         const publicKey = "EOS5Rm1VBzzHMM7qD3xCBUFh9qGfpUi9eJcgzaLoiKHGdHBD8erqa"
-        let cid = await client.dag.addData(privateKey, publicKey, msg)
+        cid = await client.dag.addData(privateKey, publicKey, msg)
         console.log(cid.codec)
         console.log(cid.toV1().toBaseEncodedString('base32'))
     })
 
     it('get data', async () => {
-        const cid = "bafyreihhvhjaojikaf77uo2rwgur7goxcbcdwgvzo3aoai2pwbzv6sk46u"
         const privateKey = "5KQayTDGKgWPZjEehoQxQDvqVuNgiVXYkzsgAcg72P36Qr1AMzG"
         const publicKey = "EOS5Rm1VBzzHMM7qD3xCBUFh9qGfpUi9eJcgzaLoiKHGdHBD8erqa"
         let data = await client.dag.getData(privateKey, publicKey, cid)

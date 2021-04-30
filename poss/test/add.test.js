@@ -7,7 +7,7 @@ describe('.add', function () {
     let client
 
     before(() => {
-        client = createClient.create({ url: "http://192.168.0.91:6001/poss/v1/test" })
+        client = createClient.create()
     })
 
     it('add data', async () => {

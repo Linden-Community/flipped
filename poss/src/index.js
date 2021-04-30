@@ -14,6 +14,7 @@ function create(options = {}) {
         add: require('./add')(options),
         get: require('./get')(options),
         dag: require('./dag')(options),
+        pubsub: require('./pubsub')(options),
         aes: require('./aes'),
     }
 
