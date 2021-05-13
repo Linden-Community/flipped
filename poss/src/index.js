@@ -5,7 +5,7 @@ const multiaddr = require('multiaddr')
 const multibase = require('multibase')
 const multicodec = require('multicodec')
 const multihash = require('multihashes')
-const globSource = require('ipfs-utils/src/files/glob-source')
+const globSource = require('./utils/glob-source')
 const urlSource = require('ipfs-utils/src/files/url-source')
 
 function create(options = {}) {
