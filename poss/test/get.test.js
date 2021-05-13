@@ -18,16 +18,11 @@ describe('.get', function () {
     })
 
     it('get file', async () => {
-        for await (const file of client.get.file("QmebsgayqHpYSzSGZDZLu8dhkfyu1j1EBKseqit1gyvaqc")) {
-            console.log(file.type, file.path)
-            if (!file.content) continue;
-            const content = []
-            for await (const chunk of file.content) {
-                content.push(chunk)
-            }
-            console.log(content.toString())
-            assert(file.path == "QmebsgayqHpYSzSGZDZLu8dhkfyu1j1EBKseqit1gyvaqc", "get data error.")
-        }
+        await client.get.file("C:/linden/temp/photo1.jpg", "QmPTMZ8pPnTNdaU3koBGxTPCr2d9YJPx3SrWgGw7T4A75G")
+    })
+
+    it('get encryptedFile', async () => {
+        await client.get.encryptedFile("C:/linden/temp/photo2.jpg", "QmditSjDQnysiXbLf4DJGd625H7KPfeYrRgLztyG3TVLLc", "123456")
     })
 
 

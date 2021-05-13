@@ -10,13 +10,13 @@ describe('.pubsub', function () {
 
     it('test ls', async () => {
         const ls = await client.pubsub.ls()
-        console.log(ls)
+        console.log("ls:", ls)
     })
 
     const topic = 'aabbcc'
     it('test peers', async () => {
         const peerIds = await client.pubsub.peers(topic)
-        console.log(peerIds)
+        console.log("peerIds:", peerIds)
     })
 
     it('test pub', async () => {

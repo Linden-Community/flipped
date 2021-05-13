@@ -4,6 +4,8 @@ const fs = require('fs-extra')
 const glob = require('it-glob')
 const Path = require('path')
 const errCode = require('err-code')
+const crypto = require("./crypto")
+const toStream = require('it-to-stream')
 
 /**
  * Create an async iterator that yields paths that match requested file paths.
@@ -20,7 +22,7 @@ const errCode = require('err-code')
  * @param {import('ipfs-unixfs').MtimeLike} [options.mtime] - mtime to use - if preserveMtime is true this will be ignored
  * @yields {Object} File objects in the form `{ path: String, content: AsyncIterator<Buffer> }`
  */
-module.exports = async function * globSource (paths, options) {
+module.exports = async function* globSource(paths, options) {
   options = options || {}
 
   if (typeof paths === 'string') {
@@ -33,7 +35,8 @@ module.exports = async function * globSource (paths, options) {
       dot: Boolean(options.hidden),
       ignore: Array.isArray(options.ignore) ? options.ignore : [],
       follow: options.followSymlinks != null ? options.followSymlinks : true
-    }
+    },
+    passwd: options.passwd
   }
 
   // Check the input paths comply with options.recursive and convert to glob sources
@@ -72,7 +75,7 @@ module.exports = async function * globSource (paths, options) {
       }
     }
 
-    yield * toGlobSource({
+    yield* toGlobSource({
       path,
       type: stat.isDirectory() ? 'dir' : 'file',
       prefix,
@@ -85,15 +88,29 @@ module.exports = async function * globSource (paths, options) {
 }
 
 // @ts-ignore
-async function * toGlobSource ({ path, type, prefix, mode, mtime, preserveMode, preserveMtime }, options) {
+async function* toGlobSource({ path, type, prefix, mode, mtime, preserveMode, preserveMtime }, options) {
   options = options || {}
+  const { passwd } = options
 
   const baseName = Path.basename(path)
 
   if (type === 'file') {
+    const rs = fs.createReadStream(Path.isAbsolute(path) ? path : Path.join(process.cwd(), path), { highWaterMark: 262144 })
+
+    const progressStream = async function* (rs) {
+      for await (let chunk of rs) {
+        console.log(chunk.length, chunk.slice(0, 8))
+        if (passwd)
+          chunk = crypto.encrypt(chunk, passwd)
+
+        yield chunk
+      }
+      // rs
+    }
+
     yield {
       path: `/${baseName.replace(prefix, '')}`,
-      content: fs.createReadStream(Path.isAbsolute(path) ? path : Path.join(process.cwd(), path)),
+      content: toStream(progressStream(rs)),
       mode,
       mtime
     }
