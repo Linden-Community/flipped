@@ -1,12 +1,21 @@
 'use strict'
 
 const createClient = require('ipfs-http-client')
-const { globSource } = createClient
 const fs = require('fs-extra')
 const crypto = require("./utils/crypto")
+const Dag = require("./dag")
 
 module.exports = (options) => {
+    const dag = Dag(options)
     const client = createClient(options)
+
+    const getData = async (cid) => {
+        const content = []
+        for await (const chunk of client.cat(cid)) {
+            content.push(chunk)
+        }
+        return Buffer.concat(content)
+    }
 
     const getFile = async (path, cid) => {
         for await (const file of client.get(cid)) {
@@ -19,7 +28,7 @@ module.exports = (options) => {
         }
     }
 
-    const getAndDecrypt = async (path, cid, passwd) => {
+    const getAndDecrypt = async (path, cid, aesKey) => {
         for await (const file of client.get(cid)) {
             if (file.type != "file") console.error("this dag node is not a file")
 
@@ -31,20 +40,27 @@ module.exports = (options) => {
                     buf = Buffer.concat([buf, chunk])
                 } else {
                     let data = Buffer.concat([buf, chunk], block)
-                    data = crypto.decrypt(data, passwd)
+                    data = crypto.decrypt(data, aesKey)
                     ws.write(data)
                     buf = chunk.slice(block - buf.length)
                 }
             }
-            buf = crypto.decrypt(buf, passwd)
+            buf = crypto.decrypt(buf, aesKey)
             ws.write(buf)
             ws.end()
         }
     }
 
+    const getEncryptedFile = async (path, cid, privateKey, publicKey) => {
+        const proof = await dag.getProof(privateKey, publicKey, cid)
+        const resourceCid = proof.Links[0].Hash
+        const aesKey = proof.aesKey
+        await getAndDecrypt(path, resourceCid, aesKey)
+    }
+
     return {
-        data: client.cat,
+        data: getData,
         file: getFile,
-        encryptedFile: getAndDecrypt
+        encryptedFile: getEncryptedFile
     }
 }

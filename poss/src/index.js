@@ -15,7 +15,7 @@ function create(options = {}) {
         get: require('./get')(options),
         dag: require('./dag')(options),
         pubsub: require('./pubsub')(options),
-        aes: require('./aes'),
+        aes: require('./utils/keyTools'),
     }
 
     return client

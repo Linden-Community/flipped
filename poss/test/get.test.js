@@ -11,10 +11,8 @@ describe('.get', function () {
     })
 
     it('get data', async () => {
-        for await (const chunk of client.get.data("QmebsgayqHpYSzSGZDZLu8dhkfyu1j1EBKseqit1gyvaqc")) {
-            console.info(chunk.toString())
-            assert(chunk.toString() == "Hello world!1234565", "get data error.")
-        }
+        const rst = await client.get.data("QmebsgayqHpYSzSGZDZLu8dhkfyu1j1EBKseqit1gyvaqc")
+        console.log(rst.toString())
     })
 
     it('get file', async () => {
@@ -22,8 +20,9 @@ describe('.get', function () {
     })
 
     it('get encryptedFile', async () => {
-        await client.get.encryptedFile("C:/linden/temp/photo2.jpg", "QmditSjDQnysiXbLf4DJGd625H7KPfeYrRgLztyG3TVLLc", "123456")
+        const privateKey = "5KQayTDGKgWPZjEehoQxQDvqVuNgiVXYkzsgAcg72P36Qr1AMzG"
+        const publicKey = "EOS5Rm1VBzzHMM7qD3xCBUFh9qGfpUi9eJcgzaLoiKHGdHBD8erqa"
+        await client.get.encryptedFile("C:/linden/temp/photo2.jpg", "bafyreicl4ifhznc4m2bbhcgghowcozc5rm2ckb6pewzzu5yhi6ztqwtlky", privateKey, publicKey)
     })
-
 
 })

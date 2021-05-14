@@ -36,7 +36,7 @@ module.exports = async function* globSource(paths, options) {
       ignore: Array.isArray(options.ignore) ? options.ignore : [],
       follow: options.followSymlinks != null ? options.followSymlinks : true
     },
-    passwd: options.passwd
+    aesKey: options.aesKey
   }
 
   // Check the input paths comply with options.recursive and convert to glob sources
@@ -90,7 +90,7 @@ module.exports = async function* globSource(paths, options) {
 // @ts-ignore
 async function* toGlobSource({ path, type, prefix, mode, mtime, preserveMode, preserveMtime }, options) {
   options = options || {}
-  const { passwd } = options
+  const { aesKey } = options
 
   const baseName = Path.basename(path)
 
@@ -99,9 +99,9 @@ async function* toGlobSource({ path, type, prefix, mode, mtime, preserveMode, pr
 
     const progressStream = async function* (rs) {
       for await (let chunk of rs) {
-        console.log(chunk.length, chunk.slice(0, 8))
-        if (passwd)
-          chunk = crypto.encrypt(chunk, passwd)
+        // console.log(chunk.length, chunk.slice(0, 8))
+        if (aesKey)
+          chunk = crypto.encrypt(chunk, aesKey)
 
         yield chunk
       }
