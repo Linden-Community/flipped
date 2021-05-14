@@ -15,6 +15,8 @@ module.exports = (options) => {
     proof.grantor = aes.privateToPublic(privateKey)
     proof.grantee = publicKey
     proof.encryptInfo = aes.encrypt(privateKey, publicKey, aesKey)
+    if (resource.path && resource.path.lastIndexOf(".encrypted") > 0)
+      resource.name = resource.path.substring(0, resource.path.lastIndexOf(".encrypted"))
     proof.addLink(resource)
     const rst = await client.dag.put(proof, { format: 'dag-cbor', hashAlg: 'sha2-256', pin: true })
     return rst
