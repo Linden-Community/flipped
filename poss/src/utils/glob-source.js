@@ -92,7 +92,10 @@ async function* toGlobSource({ path, type, prefix, mode, mtime, preserveMode, pr
   options = options || {}
   const { aesKey } = options
 
-  const baseName = Path.basename(path)
+  let baseName = Path.basename(path)
+
+  if (aesKey)
+    baseName += ".encrypted"
 
   if (type === 'file') {
     const rs = fs.createReadStream(Path.isAbsolute(path) ? path : Path.join(process.cwd(), path), { highWaterMark: 262144 })

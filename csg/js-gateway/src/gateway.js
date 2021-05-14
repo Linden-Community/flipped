@@ -39,6 +39,10 @@ apiProxy.on('proxyRes', function (proxyRes, req, res) {
             json.target = proxyTarget
             json.from = req.headers['x-forwarded-for'] || req.socket.remoteAddress
             let jsonStr = JSON.stringify(json)
+
+            if (json.Size)
+                json.Size = parseInt(json.Size)
+
             console.log("res: " + jsonStr)
 
             cids.insertOne(json)

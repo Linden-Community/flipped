@@ -21,7 +21,7 @@ describe('.add', function () {
     it('add encryptedFile', async () => {
         const proof = await client.add.encryptedFile('C:/linden/temp/photo1.jpg',
             "5KQayTDGKgWPZjEehoQxQDvqVuNgiVXYkzsgAcg72P36Qr1AMzG", "EOS5Rm1VBzzHMM7qD3xCBUFh9qGfpUi9eJcgzaLoiKHGdHBD8erqa")
-        console.log('Added encryptedFile proof:', proof.Hash)
+        console.log('Added encryptedFile proof:', proof.cid)
 
         assert(proof.resource.size == 3705067, "add file error.")
     })

@@ -25,7 +25,7 @@ module.exports = (options) => {
     const aesKey = await keyTools.createPrivateKey()
     const resource = await encryptAndUpload(path, aesKey)
     const cid = await dag.addProof(privateKey, publicKey, resource, aesKey)
-    return { Name: "proof", Hash: cid, resource: resource, Tsize: -1}
+    return { cid: cid, resource: resource }
   }
 
   return {

@@ -22,7 +22,8 @@ describe('.get', function () {
     it('get encryptedFile', async () => {
         const privateKey = "5KQayTDGKgWPZjEehoQxQDvqVuNgiVXYkzsgAcg72P36Qr1AMzG"
         const publicKey = "EOS5Rm1VBzzHMM7qD3xCBUFh9qGfpUi9eJcgzaLoiKHGdHBD8erqa"
-        await client.get.encryptedFile("C:/linden/temp/photo2.jpg", "bafyreicl4ifhznc4m2bbhcgghowcozc5rm2ckb6pewzzu5yhi6ztqwtlky", privateKey, publicKey)
+        const rst = await client.get.encryptedFile("C:/linden/temp/photo2.jpg", "bafyreicl4ifhznc4m2bbhcgghowcozc5rm2ckb6pewzzu5yhi6ztqwtlky", privateKey, publicKey)
+        console.log(rst)
     })
 
 })
