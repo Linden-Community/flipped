@@ -36,8 +36,7 @@ describe('.dag', function () {
 
     it('get proof', async () => {
         const privateKey = "5KQayTDGKgWPZjEehoQxQDvqVuNgiVXYkzsgAcg72P36Qr1AMzG"
-        const publicKey = "EOS5Rm1VBzzHMM7qD3xCBUFh9qGfpUi9eJcgzaLoiKHGdHBD8erqa"
-        let data = await client.dag.getProof(privateKey, publicKey, cid)
+        let data = await client.dag.getProof(cid, privateKey)
         console.log(JSON.stringify(data))
     })
 })

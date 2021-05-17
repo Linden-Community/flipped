@@ -19,11 +19,14 @@ describe('.get', function () {
         await client.get.file("C:/linden/temp/photo1.jpg", "QmPTMZ8pPnTNdaU3koBGxTPCr2d9YJPx3SrWgGw7T4A75G")
     })
 
-    it('get encryptedFile', async () => {
-        const privateKey = "5KQayTDGKgWPZjEehoQxQDvqVuNgiVXYkzsgAcg72P36Qr1AMzG"
-        const publicKey = "EOS5Rm1VBzzHMM7qD3xCBUFh9qGfpUi9eJcgzaLoiKHGdHBD8erqa"
-        const rst = await client.get.encryptedFile("C:/linden/temp/photo2.jpg", "bafyreicl4ifhznc4m2bbhcgghowcozc5rm2ckb6pewzzu5yhi6ztqwtlky", privateKey, publicKey)
-        console.log(rst)
+    it('get encryptedFile1', async () => {
+        const privateKey = "5KZuwbXgRVmkKfT8f44ysZXmExs2j4W5Fsa7sWhKdU68w9SawSS"
+        await client.get.encryptedFile("C:/linden/temp/photo2.jpg", "bafyreifpi7rzrcvxnfvvvptupnwt4f4fqop2te5dc7ealwd4z5qz53bmuq", privateKey)
+    })
+
+    it('get encryptedFile2', async () => {
+        const privateKey = "5HzCbxiPR88yzNo8VJnz2fhDEphhYEByh8aKd8No8RpYZCdDSfw"
+        await client.get.encryptedFile("C:/linden/temp/photo3.jpg", "bafyreiff2whan3wc6enndjqdznp56wwluynsp5olnpacnhzrc2fe4wujry", privateKey)
     })
 
 })

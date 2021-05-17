@@ -28,9 +28,18 @@ module.exports = (options) => {
     return { cid: cid, resource: resource }
   }
 
+  const grant = async function (oldProof, privateKey, publicKey) {
+    const proof = await dag.getProof(oldProof, privateKey)
+    const resource = proof.Links[0].Hash
+    const aesKey = proof.aesKey
+    const newProof = await dag.addProof(privateKey, publicKey, resource, aesKey)
+    return { cid: newProof, resource: resource }
+  }
+
   return {
     data: client.add,
     file: addFile,
-    encryptedFile: addEncryptedFile
+    encryptedFile: addEncryptedFile,
+    proof: grant
   }
 }

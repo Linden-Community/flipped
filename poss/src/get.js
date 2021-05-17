@@ -51,8 +51,8 @@ module.exports = (options) => {
         }
     }
 
-    const getEncryptedFile = async (path, cid, privateKey, publicKey) => {
-        const proof = await dag.getProof(privateKey, publicKey, cid)
+    const getEncryptedFile = async (path, cid, privateKey) => {
+        const proof = await dag.getProof(cid, privateKey)
         const resourceCid = proof.Links[0].Hash
         const aesKey = proof.aesKey
         await getAndDecrypt(path, resourceCid, aesKey)

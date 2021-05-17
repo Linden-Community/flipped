@@ -20,7 +20,7 @@ describe('.add', function () {
 
     it('add encryptedFile', async () => {
         const proof = await client.add.encryptedFile('C:/linden/temp/photo1.jpg',
-            "5KQayTDGKgWPZjEehoQxQDvqVuNgiVXYkzsgAcg72P36Qr1AMzG", "EOS5Rm1VBzzHMM7qD3xCBUFh9qGfpUi9eJcgzaLoiKHGdHBD8erqa")
+            "5KQayTDGKgWPZjEehoQxQDvqVuNgiVXYkzsgAcg72P36Qr1AMzG", "EOS6pZ7Z1AVLrSHXboRJfRuwDyQz2mbAWWHWdo17W3nBkAbdcbkNJ")
         console.log('Added encryptedFile proof:', proof.cid)
 
         assert(proof.resource.size == 3705067, "add file error.")
@@ -28,8 +28,15 @@ describe('.add', function () {
 
     it('add file', async () => {
         const res = await client.add.file('C:/linden/temp/photo1.jpg')
+
         console.log('Added file contents:', res)
 
         assert(res.cid == "QmPTMZ8pPnTNdaU3koBGxTPCr2d9YJPx3SrWgGw7T4A75G", "add file error.")
+    })
+
+    it('add proof', async () => {
+        const proof = await client.add.proof("bafyreifpi7rzrcvxnfvvvptupnwt4f4fqop2te5dc7ealwd4z5qz53bmuq",
+        "5KZuwbXgRVmkKfT8f44ysZXmExs2j4W5Fsa7sWhKdU68w9SawSS", "EOS5sbwx2AcMEfwcYvkSn3ePk2gF97FMP4uL6ppygLhkidESHwzao")
+        console.log('Added encryptedFile proof:', proof.cid)
     })
 })
