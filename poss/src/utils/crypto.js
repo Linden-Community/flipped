@@ -2,8 +2,8 @@ const createHash = require('create-hash')
 const crypto = require('browserify-aes')
 
 const CryptoHelper = {
-    encrypt: (data, psword) => {
-        const encryption_key = createHash('sha512').update(psword).digest()
+    encrypt: (data, aesKey) => {
+        const encryption_key = createHash('sha512').update(aesKey).digest()
         const iv = encryption_key.slice(32, 48)
         const key = encryption_key.slice(0, 32)
 
@@ -11,8 +11,8 @@ const CryptoHelper = {
         data = Buffer.concat([cipher.update(data), cipher.final()])
         return data
     },
-    decrypt: (data, psword) => {
-        const encryption_key = createHash('sha512').update(psword).digest()
+    decrypt: (data, aesKey) => {
+        const encryption_key = createHash('sha512').update(aesKey).digest()
         const iv = encryption_key.slice(32, 48)
         const key = encryption_key.slice(0, 32)
 

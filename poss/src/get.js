@@ -51,6 +51,14 @@ module.exports = (options) => {
         }
     }
 
+    const getEncryptedData = async (cid, privateKey) => {
+        const proof = await dag.getProof(cid, privateKey)
+        const resourceCid = proof.Links[0].Hash
+        const aesKey = proof.aesKey
+        const encryptedData = await getData(resourceCid)
+        return crypto.decrypt(encryptedData, aesKey).toString()
+    }
+
     const getEncryptedFile = async (path, cid, privateKey) => {
         const proof = await dag.getProof(cid, privateKey)
         const resourceCid = proof.Links[0].Hash
@@ -60,6 +68,7 @@ module.exports = (options) => {
 
     return {
         data: getData,
+        encryptedData: getEncryptedData,
         file: getFile,
         encryptedFile: getEncryptedFile
     }
