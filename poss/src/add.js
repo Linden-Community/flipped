@@ -15,6 +15,12 @@ module.exports = (options) => {
     return await client.add(file)
   }
 
+  const addAddr = async function (path) {
+    const addr = globSource(path, { recursive: true })
+    return await client.add(addr)
+    // return await client.add(addr, {progress:(a,b)=>{console.log(a,b)}})
+  }
+
   const addEncryptedData = async function (data, privateKey) {
     const aesKey = await keyTools.createPrivateKey()
     const encryptedData = crypto.encrypt(data, aesKey)
@@ -45,6 +51,7 @@ module.exports = (options) => {
     data: client.add,
     encryptedData: addEncryptedData,
     file: addFile,
+    addr: addAddr,
     encryptedFile: addEncryptedFile,
     proof: grant
   }
