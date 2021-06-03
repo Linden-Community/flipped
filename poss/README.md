@@ -45,6 +45,12 @@ const client = createClient.create({ clientID: "XXXXXX" });
     }
 })();
 
+// add web site
+(async function(){
+    const res = await client.add.addr('C:/linden/linden-newpc/dist')
+    console.log('Added addr contents:', res)
+})();
+
 
 ```
 
