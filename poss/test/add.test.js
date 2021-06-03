@@ -2,7 +2,7 @@ const assert = require('assert').strict;
 const createClient = require('../src/index')
 
 describe('.add', function () {
-    this.timeout(600 * 1000)
+    this.timeout(60 * 1000)
 
     let client
 
