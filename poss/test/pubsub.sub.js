@@ -1,7 +1,7 @@
 const assert = require('assert').strict;
 const createClient = require('../src/index')
 
-const client = createClient.create();
+const client = createClient.create({clientID: "testnet"});
 const uint8Array = require('uint8arrays')
 
 const topic = 'aabbcc'

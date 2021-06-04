@@ -5,7 +5,7 @@ describe('.dag', function () {
     let client
 
     before(() => {
-        client = createClient.create()
+        client = createClient.create({clientID: "testnet"})
     })
 
     it('test dag-cbor', async () => {

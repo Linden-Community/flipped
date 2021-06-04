@@ -6,7 +6,7 @@ describe('.aes', function () {
     let client
 
     before(() => {
-        client = createClient.create()
+        client = createClient.create({clientID: "testnet"})
     })
 
     let privateKey

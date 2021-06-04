@@ -7,7 +7,7 @@ describe('.get', function () {
     let client
 
     before(() => {
-        client = createClient.create()
+        client = createClient.create({clientID: "testnet"})
     })
 
     it('get data', async () => {

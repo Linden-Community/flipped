@@ -24,7 +24,7 @@ npm install --save linden-poss
 
 ```
 const createClient = require('linden-poss');
-const client = createClient.create({ clientID: "XXXXXX" });
+const client = createClient.create({ clientID: "testnet" });
 
 // add data
 (async function(){
