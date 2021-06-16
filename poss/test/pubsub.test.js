@@ -13,7 +13,7 @@ describe('.pubsub', function () {
         console.log("ls:", ls)
     })
 
-    const topic = 'aabbcc'
+    const topic = '/orbitdb/zdpuAkpFFaTtzSRqisaaMSuVNyJ2XQPb31iZSjEjd934tywHN/kv4'
     it('test peers', async () => {
         const peerIds = await client.pubsub.peers(topic)
         console.log("peerIds:", peerIds)
