@@ -38,8 +38,7 @@ let dirInfo = {
 let db;
 (async () => {
     db = await createDB()
+    const hash = await db.put("user1", dirInfo);
     dirInfo = db.get("user1");
     console.log(dirInfo)
-
-    const hash = await db.put("user1", dirInfo);
 })()

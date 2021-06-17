@@ -1,0 +1,19 @@
+version: "3.7"
+
+services:
+  dbbackup1:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    image: $env_image
+    container_name: dbbackup1
+    restart: always
+    environment:
+      - url=$env_dbbackup1
+    volumes:
+      - ../../orbitdb:/opt/node/orbitdb
+networks:
+  default:
+    name: flipped_default
+
+

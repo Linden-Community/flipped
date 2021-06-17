@@ -9,7 +9,8 @@ module.exports = async () => {
     const options = {
         accessController: {
             write: [
-                orbitdb.identity.id
+                // orbitdb.identity.id
+                "*"
             ]
         }
     }
