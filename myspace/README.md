@@ -8,6 +8,7 @@ A IPFS-backed cloud disk.
 ## Table of Contents
 
 - [Install](#install)
+- [Initia](#initia)
 - [Usage](#usage)
 - [Maintainers](#maintainers)
 - [Contributing](#contributing)
