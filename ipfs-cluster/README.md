@@ -25,6 +25,10 @@ echo "alias ipfs0='docker exec ipfs0 ipfs'" >> .bashrc
 echo "alias ipfs1='docker exec ipfs1 ipfs'" >> .bashrc
 echo "alias ipfs2='docker exec ipfs2 ipfs'" >> .bashrc
 . .bashrc
+
+ipfs0 config --json API.HTTPHeaders.Access-Control-Allow-Origin '["*"]'
+docker-compose down
+docker-compose up -d
 ```
 
 ## Usage
