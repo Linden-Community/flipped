@@ -13,6 +13,7 @@ module.exports = (options) => {
   const addFile = async function (path) {
     const file = globSource(path)
     return await client.add(file)
+    // return await client.add(file, {progress:(a,b)=>{console.log(a,b)}})
   }
 
   const addAddr = async function (path) {
@@ -34,6 +35,7 @@ module.exports = (options) => {
     const options = { aesKey: await keyTools.createPrivateKey() }
     const file = globSource(path, options)
     const resource = await client.add(file)
+    // const resource = await client.add(file, {progress:(a,b)=>{console.log(a,b)}})
     const publicKey = keyTools.privateToPublic(privateKey)
     const cid = await dag.addProof(privateKey, publicKey, resource, options.aesKey)
     return { cid: cid, resource: resource }

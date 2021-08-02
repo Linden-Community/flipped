@@ -1,7 +1,7 @@
 'use strict'
 
 const createClient = require('ipfs-http-client')
-const fs = require('fs-extra')
+const fs = require('fs')
 const crypto = require("./utils/crypto")
 const Dag = require("./dag")
 

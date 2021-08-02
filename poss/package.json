@@ -1,13 +1,12 @@
 {
   "dependencies": {
     "eosjs-ecc": "^4.0.7",
-    "fs-extra": "^10.0.0",
     "ipfs-http-client": "^49.0.4",
     "through2": "^4.0.2"
   },
   "name": "linden-poss",
   "description": "[![standard-readme compliant](https://img.shields.io/badge/standard--readme-OK-green.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme) TODO: Put more badges here.",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "main": "src/index.js",
   "devDependencies": {},
   "scripts": {

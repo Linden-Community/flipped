@@ -1,6 +1,7 @@
 'use strict'
 
-const fs = require('fs-extra')
+const fsp = require('fs').promises
+const fs = require('fs')
 const glob = require('it-glob')
 const Path = require('path')
 const errCode = require('err-code')
@@ -50,7 +51,7 @@ module.exports = async function* globSource(paths, options) {
     }
 
     const absolutePath = Path.resolve(process.cwd(), path)
-    const stat = await fs.stat(absolutePath)
+    const stat = await fsp.stat(absolutePath)
     const prefix = Path.dirname(absolutePath)
 
     let mode = options.mode
@@ -137,7 +138,7 @@ async function* toGlobSource({ path, type, prefix, mode, mtime, preserveMode, pr
   })
 
   for await (const p of glob(path, '**/*', globOptions)) {
-    const stat = await fs.stat(p)
+    const stat = await fsp.stat(p)
 
     if (preserveMode || preserveMtime) {
       if (preserveMode) {
