@@ -1,26 +1,15 @@
 'use strict'
 
 const createClient = require('ipfs-http-client')
-const globSource = require("./utils/glob-source")
 const keyTools = require("./utils/keyTools")
 const crypto = require("./utils/crypto")
 const Dag = require("./dag")
+const uploadHelper = require("./utils/uploadHelper")
 
 module.exports = (options) => {
   const dag = Dag(options)
   const client = createClient(options)
-
-  const addFile = async function (path) {
-    const file = globSource(path)
-    return await client.add(file)
-    // return await client.add(file, {progress:(a,b)=>{console.log(a,b)}})
-  }
-
-  const addAddr = async function (path) {
-    const addr = globSource(path, { recursive: true })
-    return await client.add(addr)
-    // return await client.add(addr, {progress:(a,b)=>{console.log(a,b)}})
-  }
+  const uploader = uploadHelper(options)
 
   const addEncryptedData = async function (data, privateKey) {
     const aesKey = await keyTools.createPrivateKey()
@@ -32,12 +21,10 @@ module.exports = (options) => {
   }
 
   const addEncryptedFile = async function (path, privateKey) {
-    const options = { aesKey: await keyTools.createPrivateKey() }
-    const file = globSource(path, options)
-    const resource = await client.add(file)
-    // const resource = await client.add(file, {progress:(a,b)=>{console.log(a,b)}})
+    const aesKey = await keyTools.createPrivateKey()
+    const resource = await uploader.uploadEncryptedFile(path, aesKey)
     const publicKey = keyTools.privateToPublic(privateKey)
-    const cid = await dag.addProof(privateKey, publicKey, resource, options.aesKey)
+    const cid = await dag.addProof(privateKey, publicKey, resource, aesKey)
     return { cid: cid, resource: resource }
   }
 
@@ -52,8 +39,8 @@ module.exports = (options) => {
   return {
     data: client.add,
     encryptedData: addEncryptedData,
-    file: addFile,
-    addr: addAddr,
+    file: uploader.uploadFile,
+    addr: uploader.uploadDir,
     encryptedFile: addEncryptedFile,
     proof: grant
   }

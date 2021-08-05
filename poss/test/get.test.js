@@ -34,5 +34,4 @@ describe('.get', function () {
         const privateKey = "5HzCbxiPR88yzNo8VJnz2fhDEphhYEByh8aKd8No8RpYZCdDSfw"
         await client.get.encryptedFile("C:/linden/temp/photo3.jpg", "bafyreih55flvn3ki5qjkvramxgvqovolg57xe4ofdymjjntg7m7q543yfa", privateKey)
     })
-
 })

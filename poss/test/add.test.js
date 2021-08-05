@@ -39,7 +39,7 @@ describe('.add', function () {
 
     it('add addr', async () => {
         const res = await client.add.addr('C:/linden/linden-newpc/dist')
-
+        assert(res, "add addr error.")
         console.log('Added addr contents:', res)
 
         // assert(res.cid == "QmeHztEDdupsiARZxboLSj9w1PjtRYFHA6ByEPKgzU9KK3", "add file error.")
