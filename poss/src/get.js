@@ -12,7 +12,7 @@ module.exports = (options) => {
     const getData = async (cid) => {
         const content = []
         for await (const chunk of client.cat(cid)) {
-            content.push(chunk)
+            content.push(Buffer.from(chunk))
         }
         return Buffer.concat(content)
     }

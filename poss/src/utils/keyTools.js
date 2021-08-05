@@ -1,7 +1,8 @@
 'use strict'
 
 const ecc = require('eosjs-ecc');
-const Long = require("long");
+var ByteBuffer = require('bytebuffer');
+var Long = ByteBuffer.Long;
 
 const CryptoHelper = {
     createPrivateKey: async function () {
