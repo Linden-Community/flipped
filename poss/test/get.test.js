@@ -34,4 +34,12 @@ describe('.get', function () {
         const privateKey = "5HzCbxiPR88yzNo8VJnz2fhDEphhYEByh8aKd8No8RpYZCdDSfw"
         await client.get.encryptedFile("C:/linden/temp/photo3.jpg", "bafyreih55flvn3ki5qjkvramxgvqovolg57xe4ofdymjjntg7m7q543yfa", privateKey)
     })
+
+    it('get encryptedBuffer', async () => {
+        const privateKey = "5JdV75pqePpw9saQgqRBwLCmDvEauDVwT98WM7Q3o33UyqhckXg"
+        const buf = await client.get.encryptedBuffer("bafyreibufx6rtr5vwpq7flssskp5kodeymfxgbsv5utptnkkttr6meqsxa", privateKey)
+        console.log(buf.length)
+        assert(buf.length == 3703889, "add file error.")
+    })
+
 })
