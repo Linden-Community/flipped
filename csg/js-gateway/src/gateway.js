@@ -34,7 +34,8 @@ apiProxy.on('proxyRes', function (proxyRes, req, res) {
                 json.Hash = json.Cid['/']
                 delete json.Cid
             }
-            json.api = res.url
+            json.api = res.url.replace(/\?.*/, "")
+            json.query = res.req.query
             json.createAt = new Date()
             json.target = proxyTarget
             json.from = req.headers['x-forwarded-for'] || req.socket.remoteAddress
