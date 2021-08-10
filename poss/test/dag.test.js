@@ -5,7 +5,7 @@ describe('.dag', function () {
     let client
 
     before(() => {
-        client = createClient.create({clientID: "testnet"})
+        client = createClient.create({ clientID: "testnet" })
     })
 
     it('test dag-cbor', async () => {
@@ -29,7 +29,7 @@ describe('.dag', function () {
         const data = { "cid": "QmTgKghvimxUPwVPiTwgiATDQhqUxcWrm1bM6M2cdK7ycM", "path": "aaa.txt", "size": 15 }
         const privateKey = "5KQayTDGKgWPZjEehoQxQDvqVuNgiVXYkzsgAcg72P36Qr1AMzG"
         const publicKey = "EOS5Rm1VBzzHMM7qD3xCBUFh9qGfpUi9eJcgzaLoiKHGdHBD8erqa"
-        cid = await client.dag.addProof(privateKey, publicKey, data, "sldkjfei")
+        cid = await client.dag.addProof(privateKey, publicKey, data, "sldkjfei", { "user": "p3" })
         console.log(cid.codec)
         console.log(cid.toV1().toBaseEncodedString('base32'))
     })

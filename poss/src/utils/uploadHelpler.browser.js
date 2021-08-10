@@ -3,6 +3,19 @@
 const axios = require('axios');
 const crypto = require("./crypto")
 
+function buildUrl(url, options) {
+    let subUrl = ""
+    for(let key in options){
+        subUrl = subUrl + subUrl ? "&" : "" + key + "=" + options[key]
+    }
+    if (url.includes('?')) {
+        url += '&' + subUrl
+    } else {
+        url += '?' + subUrl
+    }
+    return url
+}
+
 module.exports = (options) => {
     const url = options.url + "/add"
 
@@ -24,14 +37,14 @@ module.exports = (options) => {
         return form
     }
 
-    const uploadFile = async function (file) {
+    const uploadFile = async function (file, options = {}) {
         const form = new FormData();
         form.append("path", file);
 
         try {
             let info = await axios({
                 method: "post",
-                url: url,
+                url: buildUrl(url, options),
                 processData: false,
                 mimeType: "multipart/form-data",
                 contentType: false,
@@ -48,13 +61,13 @@ module.exports = (options) => {
         console.error("browsers are not support uploading dir.")
     }
 
-    const uploadEncryptedFile = async function (file, aesKey) {
+    const uploadEncryptedFile = async function (file, aesKey, options = {}) {
         const form = await getEncryptedForm(file, aesKey)
 
         try {
             let info = await axios({
                 method: "post",
-                url: url,
+                url: buildUrl(url, options),
                 processData: false,
                 mimeType: "multipart/form-data",
                 contentType: false,

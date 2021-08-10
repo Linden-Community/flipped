@@ -38,6 +38,7 @@ apiProxy.on('proxyRes', function (proxyRes, req, res) {
             json.query = res.req.query
             json.createAt = new Date()
             json.target = proxyTarget
+            json.Name = json.Name || res.req.query["proof-name"]
             json.from = req.headers['x-forwarded-for'] || req.socket.remoteAddress
             let jsonStr = JSON.stringify(json)
 

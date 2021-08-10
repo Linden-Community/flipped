@@ -10,15 +10,18 @@ module.exports = (options) => {
 
   const client = createClient(options)
 
-  const addProof = async function (privateKey, publicKey, resource, aesKey) {
+  const addProof = async function (privateKey, publicKey, resource, aesKey, options = {}) {
     let proof = new DAGNode('v1')
     proof.grantor = aes.privateToPublic(privateKey)
     proof.grantee = publicKey
     proof.encryptInfo = aes.encrypt(privateKey, publicKey, aesKey)
-    if (resource.path && resource.path.lastIndexOf(".encrypted") > 0)
-      resource.name = resource.path.substring(0, resource.path.lastIndexOf(".encrypted"))
+    let originName = resource.path || resource.Name
+    if (originName && originName.lastIndexOf(".encrypted") > 0)
+      resource.name = originName.substring(0, originName.lastIndexOf(".encrypted"))
     proof.addLink(resource)
-    const rst = await client.dag.put(proof, { format: 'dag-cbor', hashAlg: 'sha2-256', pin: true })
+    options.proofName = resource.name || resource.path
+    Object.assign(options, { format: 'dag-cbor', hashAlg: 'sha2-256', pin: true })
+    const rst = await client.dag.put(proof, options)
     return rst
   }
 
