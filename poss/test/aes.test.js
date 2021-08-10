@@ -1,7 +1,7 @@
 const assert = require('assert').strict;
 const createClient = require('../src/index')
 
-describe('.aes', function () {
+describe('.keytools', function () {
 
     let client
 
@@ -9,27 +9,16 @@ describe('.aes', function () {
         client = createClient.create({clientID: "testnet"})
     })
 
-    let privateKey
-    it('create private key', async () => {
-        privateKey = await client.aes.createPrivateKey()
-        console.log('privateKey:', privateKey)
-    })
-
-    let publicKey
-    it('private to public', () => {
-        publicKey = client.aes.privateToPublic(privateKey)
-        console.log('publicKey:', publicKey)
-    })
-
     let encryptData
-    it('encrypt data', () => {
-        encryptData = client.aes.encrypt(privateKey, publicKey, "abc 111")
-        console.log('encrypt:', encryptData)
+    it('create private key', async () => {
+        encryptData = await client.aes.encrypt("lindensys.com", "passwd")
+        console.log('encryptData:', encryptData)
     })
 
     let decryptData
-    it('decrypt data', () => {
-        decryptData = client.aes.decrypt(privateKey, publicKey, encryptData)
+    it('create private key', async () => {
+        decryptData = await client.aes.decrypt(encryptData, "passwd")
+        assert(decryptData == "lindensys.com", "encrypt decrypt error.")
         console.log('decryptData:', decryptData.toString())
     })
 })

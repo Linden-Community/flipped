@@ -9,6 +9,10 @@ const CryptoHelper = {
         // return await ecc.randomKey();
         return await ecc.unsafeRandomKey();
     },
+    getPrivateKey: function (id, salt = "linden", keyName = "") {
+        const seed = id + salt + keyName
+        return ecc.seedPrivate(seed);
+    },
     privateToPublic: function (privateKey) {
         return ecc.privateToPublic(privateKey);
     },
@@ -19,6 +23,12 @@ const CryptoHelper = {
         let nonce = encryptedMessage.nonce
         nonce = new Long(nonce.low, nonce.high, nonce.unsigned)
         return ecc.Aes.decrypt(someonesPrivateKey, myPublic, nonce, encryptedMessage.message, encryptedMessage.checksum)
+    },
+    sign: function (str, sk) {
+        return ecc.sign(str, sk)
+    },
+    verify: function (sign, str, pk) {
+        return ecc.verify(sign, str, pk)
     }
 }
 
