@@ -6,8 +6,10 @@ const apiProxy = httpProxy.createProxyServer();
 const args = process.argv.splice(2)
 const MongoClient = require('mongodb').MongoClient;
 const mongoUrl = args[1] || "mongodb://linden:123456@192.168.0.91:27017/flipped";
-const proxyTarget = args[0] || "http://192.168.0.91:5001"
+const proxyTarget = args[0] || "http://127.0.0.1:5001"
 const client = new MongoClient(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true });
+
+console.log("args", args[0], args[1], args[2])
 
 const producer = require('../mq/producer');
 
