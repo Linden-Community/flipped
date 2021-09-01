@@ -7,7 +7,7 @@
   },
   "name": "linden-poss",
   "description": "[![standard-readme compliant](https://img.shields.io/badge/standard--readme-OK-green.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme) TODO: Put more badges here.",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "main": "src/index.js",
   "devDependencies": {},
   "scripts": {

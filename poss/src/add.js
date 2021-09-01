@@ -20,9 +20,9 @@ module.exports = (options) => {
     return { cid: cid, resource: resource }
   }
 
-  const addEncryptedFile = async function (path, privateKey, options = {}) {
+  const addEncryptedFile = async function (path, privateKey, options = {}, onUploadProgress) {
     const aesKey = await keyTools.createPrivateKey()
-    const resource = await uploader.uploadEncryptedFile(path, aesKey, options)
+    const resource = await uploader.uploadEncryptedFile(path, aesKey, options, onUploadProgress)
     const publicKey = keyTools.privateToPublic(privateKey)
     const cid = await dag.addProof(privateKey, publicKey, resource, aesKey, options)
     return { cid: cid, resource: resource }

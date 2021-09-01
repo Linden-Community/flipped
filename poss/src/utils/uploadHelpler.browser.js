@@ -5,7 +5,7 @@ const crypto = require("./crypto")
 
 function buildUrl(url, options) {
     let subUrl = ""
-    for(let key in options){
+    for (let key in options) {
         subUrl = subUrl + subUrl ? "&" : "" + key + "=" + options[key]
     }
     if (url.includes('?')) {
@@ -37,33 +37,22 @@ module.exports = (options) => {
         return form
     }
 
-    const uploadFile = async function (file, options = {}) {
+    const uploadFile = async function (file, options = {}, onUploadProgress) {
         const form = new FormData();
         form.append("path", file);
-
-        try {
-            let info = await axios({
-                method: "post",
-                url: buildUrl(url, options),
-                processData: false,
-                mimeType: "multipart/form-data",
-                contentType: false,
-                data: form,
-            });
-            return info.data
-        } catch (error) {
-            console.error(error);
-            return error
-        }
+        return await upload(form, options, onUploadProgress);
     }
 
     const uploadDir = async function (path) {
         console.error("browsers are not support uploading dir.")
     }
 
-    const uploadEncryptedFile = async function (file, aesKey, options = {}) {
+    const uploadEncryptedFile = async function (file, aesKey, options = {}, onUploadProgress) {
         const form = await getEncryptedForm(file, aesKey)
+        return await upload(form, options, onUploadProgress);
+    }
 
+    const upload = async function (form, options = {}, onUploadProgress) {
         try {
             let info = await axios({
                 method: "post",
@@ -72,6 +61,9 @@ module.exports = (options) => {
                 mimeType: "multipart/form-data",
                 contentType: false,
                 data: form,
+                onUploadProgress: progressEvent => {
+                    (typeof onUploadProgress != 'undefined') && onUploadProgress(progressEvent.loaded / progressEvent.total)
+                }
             });
             return info.data;
         } catch (error) {
