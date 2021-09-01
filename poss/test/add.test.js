@@ -46,8 +46,8 @@ describe('.add', function () {
     // })
 
     it('add proof', async () => {
-        const proof = await client.add.proof("bafyreidhss2tweoezfczggf4vlq2qkfstjylihfwnokfypcl2rmeyzivte",
-            "5JdV75pqePpw9saQgqRBwLCmDvEauDVwT98WM7Q3o33UyqhckXg", "EOS5sbwx2AcMEfwcYvkSn3ePk2gF97FMP4uL6ppygLhkidESHwzao", { "user": "p5", "proof-name": "photo1.jpg" })
+        const proof = await client.add.proof("bafyreiaktbuswsqmpzdp26poq44izyvxnu4tor7lg6aj6xvx3vgmnqwuzy",
+            "5KQayTDGKgWPZjEehoQxQDvqVuNgiVXYkzsgAcg72P36Qr1AMzG", "EOS5sbwx2AcMEfwcYvkSn3ePk2gF97FMP4uL6ppygLhkidESHwzao", { "user": "p5", "proof-name": "photo1.jpg" })
         console.log('Added encryptedFile proof:', proof.cid)
     })
 })

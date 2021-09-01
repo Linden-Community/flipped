@@ -30,7 +30,7 @@ module.exports = (options) => {
 
   const grant = async function (oldProof, privateKey, publicKey, options = {}) {
     const proof = await dag.getProof(oldProof, privateKey)
-    const resource = proof.Links[0].Hash
+    const resource = proof.Links[0]
     const aesKey = proof.aesKey
     const newProof = await dag.addProof(privateKey, publicKey, resource, aesKey, options)
     return { cid: newProof, resource: resource }
