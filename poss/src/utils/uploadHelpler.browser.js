@@ -68,7 +68,7 @@ module.exports = (options) => {
             return info.data;
         } catch (error) {
             console.error(error);
-            return error
+            throw error
         }
     }
 
