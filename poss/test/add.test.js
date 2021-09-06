@@ -23,14 +23,14 @@ describe('.add', function () {
     })
 
     it('add encryptedFile', async () => {
-        const proof = await client.add.encryptedFile('../../temp/photo1.jpg', "5KQayTDGKgWPZjEehoQxQDvqVuNgiVXYkzsgAcg72P36Qr1AMzG", { "user": "p3" })
+        const proof = await client.add.encryptedFile('/linden/temp/photo1.jpg', "5KQayTDGKgWPZjEehoQxQDvqVuNgiVXYkzsgAcg72P36Qr1AMzG", { "user": "p3" })
         console.log('Added encryptedFile proof:', proof.cid)
 
         assert(proof.resource.size == 3705067, "add file error.")
     })
 
     it('add file', async () => {
-        const res = await client.add.file('../../temp/photo1.jpg', { "user": "p4" })
+        const res = await client.add.file('/linden/temp/photo1.jpg', { "user": "p4" })
 
         console.log('Added file contents:', res)
 
@@ -38,7 +38,7 @@ describe('.add', function () {
     })
 
     // it('add addr', async () => {
-    //     const res = await client.add.addr('C:/linden/linden-newpc/dist')
+    //     const res = await client.add.addr('/linden/linden-newpc/dist')
     //     assert(res, "add addr error.")
     //     console.log('Added addr contents:', res)
 
