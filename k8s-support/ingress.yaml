@@ -7,8 +7,12 @@ metadata:
   name: ingress-dweb
   namespace: hz-ldy
 spec:
+  tls:
+  - hosts:
+    - dweb.lindensys.cn
+    secretName: dweb.lindensys.cn
   rules:
-  - host: dweb.cipfs.cn
+  - host: dweb.lindensys.cn
     http:
       paths:
       - backend:
@@ -35,8 +39,12 @@ metadata:
   name: ingress-csg
   namespace: hz-ldy
 spec:
+  tls:
+  - hosts:
+    - csg.lindensys.cn
+    secretName: csg.lindensys.cn
   rules:
-  - host: csg.cipfs.cn
+  - host: csg.lindensys.cn
     http:
       paths:
       - backend:
