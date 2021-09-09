@@ -23,13 +23,6 @@ spec:
               number: 8080
         path: /ipfs
         pathType: Prefix
-      - backend:
-          service:
-            name: svc-ipfs0
-            port:
-              number: 5001
-        path: /api/v0
-        pathType: Prefix
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
