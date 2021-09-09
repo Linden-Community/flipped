@@ -24,10 +24,10 @@ spec:
         name: container-0
         resources:
             limits:
-              cpu: '2'
-              memory: 4000Mi
+              cpu: '3'
+              memory: 3000Mi
             requests:
-              cpu: '1'
+              cpu: '2'
               memory: 2000Mi
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
@@ -78,7 +78,7 @@ spec:
         resources:
             limits:
               cpu: '2'
-              memory: 4000Mi
+              memory: 3000Mi
             requests:
               cpu: '1'
               memory: 2000Mi
@@ -99,11 +99,11 @@ spec:
         name: container-1
         resources:
             limits:
-              cpu: '2'
-              memory: 4000Mi
-            requests:
               cpu: '1'
               memory: 2000Mi
+            requests:
+              cpu: '0.5'
+              memory: 1000Mi
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
       dnsPolicy: ClusterFirst      
@@ -150,7 +150,7 @@ spec:
         resources:
             limits:
               cpu: '2'
-              memory: 4000Mi
+              memory: 3000Mi
             requests:
               cpu: '1'
               memory: 2000Mi
@@ -171,11 +171,11 @@ spec:
         name: container-1
         resources:
             limits:
-              cpu: '2'
-              memory: 4000Mi
-            requests:
               cpu: '1'
               memory: 2000Mi
+            requests:
+              cpu: '0.5'
+              memory: 1000Mi
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
       dnsPolicy: ClusterFirst
@@ -222,7 +222,7 @@ spec:
         resources:
             limits:
               cpu: '2'
-              memory: 4000Mi
+              memory: 3000Mi
             requests:
               cpu: '1'
               memory: 2000Mi
@@ -243,11 +243,11 @@ spec:
         name: container-1
         resources:
             limits:
-              cpu: '2'
-              memory: 4000Mi
-            requests:
               cpu: '1'
               memory: 2000Mi
+            requests:
+              cpu: '0.5'
+              memory: 1000Mi
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
       dnsPolicy: ClusterFirst
@@ -294,7 +294,7 @@ spec:
         resources:
             limits:
               cpu: '2'
-              memory: 4000Mi
+              memory: 3000Mi
             requests:
               cpu: '1'
               memory: 2000Mi
@@ -315,11 +315,11 @@ spec:
         name: container-1
         resources:
             limits:
-              cpu: '2'
-              memory: 4000Mi
-            requests:
               cpu: '1'
               memory: 2000Mi
+            requests:
+              cpu: '0.5'
+              memory: 1000Mi
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
       dnsPolicy: ClusterFirst
