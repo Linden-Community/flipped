@@ -25,10 +25,10 @@ spec:
         resources:
             limits:
               cpu: '3'
-              memory: 3000Mi
+              memory: 5000Mi
             requests:
               cpu: '2'
-              memory: 2000Mi
+              memory: 3000Mi
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
         volumeMounts:
@@ -106,7 +106,7 @@ spec:
               memory: 1000Mi
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
-      dnsPolicy: ClusterFirst      
+      dnsPolicy: ClusterFirst
       imagePullSecrets:
       - name: harbor-lindencloud
       nodeName: s2
