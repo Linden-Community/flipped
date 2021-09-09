@@ -249,7 +249,13 @@ spec:
       - image: harbor.lindensys.com/lindencloud/ipfs-poss:v0.8.0
         imagePullPolicy: Always
         name: container-0
-        resources: {}
+        resources:
+            limits:
+              cpu: '2'
+              memory: 4000Mi
+            requests:
+              cpu: '1'
+              memory: 2000Mi
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
         volumeMounts:
@@ -265,7 +271,13 @@ spec:
         image: harbor.lindensys.com/lindencloud/sidecar-poss:v0.1
         imagePullPolicy: Always
         name: container-1
-        resources: {}
+        resources:
+            limits:
+              cpu: '2'
+              memory: 4000Mi
+            requests:
+              cpu: '1'
+              memory: 2000Mi
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
       dnsPolicy: ClusterFirst
