@@ -77,10 +77,5 @@ spec:
               number: 6001
         path: /poss/v1/ipfsnews
         pathType: Prefix
-      - backend:
-          service:
-            name: svc-ipfs-s4
-            port:
-              number: 8080
-        path: /poss/v1/ipfsnews/ipfs
-        pathType: Prefix
+
+              

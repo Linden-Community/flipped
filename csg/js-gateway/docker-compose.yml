@@ -9,25 +9,7 @@ services:
     container_name: gateway0
     restart: always
     environment:
-      - url=http://ipfs0:5001
-      - mongoUrl=$env_mongoUrl
-      - mqServer=$env_mqServer
-  gateway1:
-    image: $env_image
-    container_name: gateway1
-    restart: always
-    ports:
-      - 6001:6001
-    environment:
-      - url=http://ipfs1:5001
-      - mongoUrl=$env_mongoUrl
-      - mqServer=$env_mqServer
-  gateway2:
-    image: $env_image
-    container_name: gateway2
-    restart: always
-    environment:
-      - url=http://ipfs2:5001
+      - url=http://localhost:5001
       - mongoUrl=$env_mongoUrl
       - mqServer=$env_mqServer
 networks:

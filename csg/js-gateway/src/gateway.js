@@ -57,8 +57,17 @@ apiProxy.on('proxyRes', function (proxyRes, req, res) {
     });
 });
 
-app.all("/*", function (req, res) {
-    console.log("req:", req.url, new Date())
+app.all("/poss/v1/*/ipfs/*", function (req, res) {
+    console.log("req1:", req.url, new Date())
+    res.url = req.url
+    req.url = req.url.replace(/\/poss\/v1\/[^\/]+\/ipfs\//, "/ipfs/")
+    apiProxy.web(req, res, {
+        target: "http://127.0.0.1:8080"
+    });
+});
+
+app.all("/poss/v1/*", function (req, res) {
+    console.log("req2:", req.url, new Date())
     res.url = req.url
     req.url = req.url.replace(/\/poss\/v1\/[^\/]+\//, "/api/v0/")
     apiProxy.web(req, res, {
