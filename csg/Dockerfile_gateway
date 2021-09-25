@@ -2,13 +2,13 @@ FROM node:10-buster
 
 RUN mkdir -p /opt/node
 WORKDIR /opt/node
-COPY js-gateway/src src 
 
-COPY js-gateway/node_modules node_modules
-# COPY js-gateway/package.json package.json
-# RUN npm i
+# COPY js-gateway/node_modules node_modules
+COPY js-gateway/package.json package.json
+RUN npm i
 
 COPY mq mq
+COPY js-gateway/src src 
 
 CMD node src/gateway ${url} ${mongoUrl} ${mqServer}
 # CMD sleep 36000
