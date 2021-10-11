@@ -115,3 +115,29 @@ spec:
     workload.user.cattle.io/workloadselector: apps.statefulset-default-statefulsets-ipfs-s4
   sessionAffinity: None
   type: NodePort
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-ipfs-s5
+  namespace: hz-ldy
+spec:
+  externalTrafficPolicy: Cluster
+  ports:
+  - name: server
+    port: 6001
+    protocol: TCP
+    targetPort: 6001
+  - name: peers
+    nodePort: 30405
+    port: 4001
+    protocol: TCP
+    targetPort: 4001
+  - name: dweb
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    workload.user.cattle.io/workloadselector: apps.statefulset-default-statefulsets-ipfs-s5
+  sessionAffinity: None
+  type: NodePort

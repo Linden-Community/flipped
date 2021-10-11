@@ -25,10 +25,10 @@ spec:
         resources:
             limits:
               cpu: '3'
-              memory: 5000Mi
+              memory: 15000Mi
             requests:
               cpu: '2'
-              memory: 3000Mi
+              memory: 10000Mi
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
         volumeMounts:
@@ -37,7 +37,7 @@ spec:
       dnsPolicy: ClusterFirst
       imagePullSecrets:
       - name: harbor-lindencloud
-      nodeName: s2
+      nodeName: master01
       restartPolicy: Always
       schedulerName: default-scheduler
       securityContext: {}
@@ -109,7 +109,7 @@ spec:
       dnsPolicy: ClusterFirst
       imagePullSecrets:
       - name: harbor-lindencloud
-      nodeName: s2
+      nodeName: master01
       restartPolicy: Always
       schedulerName: default-scheduler
       securityContext: {}
@@ -181,7 +181,7 @@ spec:
       dnsPolicy: ClusterFirst
       imagePullSecrets:
       - name: harbor-lindencloud
-      nodeName: s2
+      nodeName: master02
       restartPolicy: Always
       schedulerName: default-scheduler
       securityContext: {}
@@ -253,7 +253,7 @@ spec:
       dnsPolicy: ClusterFirst
       imagePullSecrets:
       - name: harbor-lindencloud
-      nodeName: s2
+      nodeName: master01
       restartPolicy: Always
       schedulerName: default-scheduler
       securityContext: {}
@@ -310,7 +310,7 @@ spec:
         - configMapRef:
             name: cm-ipfs-poss
             optional: false
-        image: harbor.lindensys.com/lindencloud/sidecar-poss:v0.1
+        image: harbor.lindensys.com/lindencloud/sidecar-poss:v0.2
         imagePullPolicy: Always
         name: container-1
         resources:
@@ -323,7 +323,7 @@ spec:
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
       dnsPolicy: ClusterFirst
-      nodeName: s2
+      nodeName: master02
       imagePullSecrets:
       - name: harbor-lindencloud
       restartPolicy: Always
@@ -334,6 +334,78 @@ spec:
       - name: vol0
         persistentVolumeClaim:
           claimName: pvc-ipfs-s4
+  updateStrategy:
+    rollingUpdate:
+      partition: 0
+    type: RollingUpdate
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: statefulsets-ipfs-s5
+  namespace: hz-ldy
+spec:
+  podManagementPolicy: OrderedReady
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      workload.user.cattle.io/workloadselector: apps.statefulset-default-statefulsets-ipfs-s5
+  serviceName: svc-ipfs-s4
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        workload.user.cattle.io/workloadselector: apps.statefulset-default-statefulsets-ipfs-s5
+    spec:
+      affinity: {}
+      containers:
+      - image: harbor.lindensys.com/lindencloud/ipfs-poss:v0.8.0
+        imagePullPolicy: Always
+        name: container-0
+        resources:
+            limits:
+              cpu: '2'
+              memory: 3000Mi
+            requests:
+              cpu: '1'
+              memory: 2000Mi
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /data/ipfs
+          name: vol0
+      - env:
+        - name: url
+          value: http://127.0.0.1:5001
+        envFrom:
+        - configMapRef:
+            name: cm-ipfs-poss
+            optional: false
+        image: harbor.lindensys.com/lindencloud/sidecar-poss:v0.2
+        imagePullPolicy: Always
+        name: container-1
+        resources:
+            limits:
+              cpu: '1'
+              memory: 2000Mi
+            requests:
+              cpu: '0.5'
+              memory: 1000Mi
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      nodeName: master01
+      imagePullSecrets:
+      - name: harbor-lindencloud
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - name: vol0
+        persistentVolumeClaim:
+          claimName: pvc-ipfs-s5
   updateStrategy:
     rollingUpdate:
       partition: 0

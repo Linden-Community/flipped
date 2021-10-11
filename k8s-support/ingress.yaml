@@ -77,5 +77,11 @@ spec:
               number: 6001
         path: /poss/v1/ipfsnews
         pathType: Prefix
-
+      - backend:
+          service:
+            name: svc-ipfs-s5
+            port:
+              number: 6001
+        path: /poss/v1/babaofan
+        pathType: Prefix
               
