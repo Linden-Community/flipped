@@ -99,3 +99,20 @@ spec:
   storageClassName: ""
   volumeMode: Filesystem
   volumeName: pv-data-ipfs-s5
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  finalizers:
+  - kubernetes.io/pvc-protection
+  name: pvc-ipfs-b1
+  namespace: hz-ldy
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Gi
+  storageClassName: ""
+  volumeMode: Filesystem
+  volumeName: pv-data-ipfs-b1
