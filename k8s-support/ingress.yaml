@@ -84,4 +84,11 @@ spec:
               number: 6001
         path: /poss/v1/babaofan
         pathType: Prefix
+      - backend:
+          service:
+            name: svc-ipfs-s6
+            port:
+              number: 6001
+        path: /poss/v1/myspace
+        pathType: Prefix
               
