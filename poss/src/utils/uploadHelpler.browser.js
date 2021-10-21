@@ -6,7 +6,8 @@ const crypto = require("./crypto")
 function buildUrl(url, options) {
     let subUrl = ""
     for (let key in options) {
-        subUrl = subUrl + subUrl ? "&" : "" + key + "=" + options[key]
+        let link = subUrl ? "&" : ""
+        subUrl += link + key + "=" + options[key]
     }
     if (url.includes('?')) {
         url += '&' + subUrl

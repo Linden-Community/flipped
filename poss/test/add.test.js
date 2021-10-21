@@ -23,7 +23,7 @@ describe('.add', function () {
     })
 
     it('add encryptedFile', async () => {
-        const proof = await client.add.encryptedFile('/linden/temp/photo1.jpg', "5KQayTDGKgWPZjEehoQxQDvqVuNgiVXYkzsgAcg72P36Qr1AMzG", { "memo": "aaa,photo,2" })
+        const proof = await client.add.encryptedFile('/linden/temp/photo1.jpg', "5KQayTDGKgWPZjEehoQxQDvqVuNgiVXYkzsgAcg72P36Qr1AMzG", { "user": "p2", "memo": "aaa,photo,2" })
         console.log('Added encryptedFile proof:', proof.cid)
 
         assert(proof.resource.size == 3705067, "add file error.")
