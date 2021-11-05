@@ -188,10 +188,6 @@ spec:
     port: 4001
     protocol: TCP
     targetPort: 4001
-  - name: dweb
-    port: 8080
-    protocol: TCP
-    targetPort: 8080
   selector:
     workload.user.cattle.io/workloadselector: apps.statefulset-default-statefulsets-ipfs-b1
   sessionAffinity: None

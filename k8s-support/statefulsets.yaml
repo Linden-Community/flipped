@@ -238,7 +238,7 @@ spec:
         - configMapRef:
             name: cm-ipfs-poss
             optional: false
-        image: harbor.lindensys.com/lindencloud/sidecar-poss:v0.1
+        image: harbor.lindensys.com/lindencloud/sidecar-poss:v0.2
         imagePullPolicy: Always
         name: container-1
         resources:
@@ -510,16 +510,35 @@ spec:
         name: container-0
         resources:
             limits:
-              cpu: '2'
+              cpu: '4'
               memory: 8G
             requests:
-              cpu: '1'
+              cpu: '2'
               memory: 4G
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
         volumeMounts:
         - mountPath: /data/ipfs
           name: vol0
+      - env:
+        - name: active
+          value: pro
+        - name: consumerName
+          value: pinion_hz_master3_b1_2
+        - name: hotBackUrl
+          value: http://127.0.0.1:5001/api/v0/
+        image: harbor.lindensys.com/lindencloud/pinion:0.1.0-SNAPSHOT
+        imagePullPolicy: Always
+        name: container-1
+        resources:
+          limits:
+            cpu: '2'
+            memory: 2G
+          requests:
+            cpu: '1'
+            memory: 1G
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
       dnsPolicy: ClusterFirst
       nodeName: master03
       imagePullSecrets:
