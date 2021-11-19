@@ -188,6 +188,10 @@ spec:
     port: 4001
     protocol: TCP
     targetPort: 4001
+  - name: default
+    port: 8089
+    protocol: TCP
+    targetPort: 8089
   selector:
     workload.user.cattle.io/workloadselector: apps.statefulset-default-statefulsets-ipfs-b1
   sessionAffinity: None

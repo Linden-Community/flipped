@@ -527,6 +527,8 @@ spec:
           value: pinion_hz_master3_b1_2
         - name: hotBackUrl
           value: http://127.0.0.1:5001/api/v0/
+        - name: loopTime
+          value: "20000"
         image: harbor.lindensys.com/lindencloud/pinion:0.1.0-SNAPSHOT
         imagePullPolicy: Always
         name: container-1
