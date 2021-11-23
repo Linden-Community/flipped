@@ -1,6 +1,5 @@
 # flipped
 
-![banner](./imgs/flipped-logo.png)
 A set of tools based on IPFS.
 
 *Warning* This project is still **pre-release** and is not ready for production usage.
