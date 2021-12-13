@@ -351,7 +351,7 @@ spec:
   selector:
     matchLabels:
       workload.user.cattle.io/workloadselector: apps.statefulset-default-statefulsets-ipfs-s5
-  serviceName: svc-ipfs-s4
+  serviceName: svc-ipfs-s5
   template:
     metadata:
       creationTimestamp: null
@@ -482,6 +482,78 @@ spec:
     rollingUpdate:
       partition: 0
     type: RollingUpdate
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: statefulsets-ipfs-s7
+  namespace: hz-ldy
+spec:
+  podManagementPolicy: OrderedReady
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      workload.user.cattle.io/workloadselector: apps.statefulset-default-statefulsets-ipfs-s7
+  serviceName: svc-ipfs-s7
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        workload.user.cattle.io/workloadselector: apps.statefulset-default-statefulsets-ipfs-s7
+    spec:
+      affinity: {}
+      containers:
+      - image: harbor.lindensys.com/lindencloud/ipfs-poss:v0.8.0
+        imagePullPolicy: Always
+        name: container-0
+        resources:
+            limits:
+              cpu: '2'
+              memory: 8G
+            requests:
+              cpu: '1'
+              memory: 4G
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /data/ipfs
+          name: vol0
+      - env:
+        - name: url
+          value: http://127.0.0.1:5001
+        envFrom:
+        - configMapRef:
+            name: cm-ipfs-poss
+            optional: false
+        image: harbor.lindensys.com/lindencloud/sidecar-poss:v0.2
+        imagePullPolicy: Always
+        name: container-1
+        resources:
+            limits:
+              cpu: '1'
+              memory: 2G
+            requests:
+              cpu: '0.5'
+              memory: 1G
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      nodeName: master01
+      imagePullSecrets:
+      - name: harbor-lindencloud
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - name: vol0
+        persistentVolumeClaim:
+          claimName: pvc-ipfs-s7
+  updateStrategy:
+    rollingUpdate:
+      partition: 0
+    type: RollingUpdate
 
 ---
 apiVersion: apps/v1
@@ -496,7 +568,7 @@ spec:
   selector:
     matchLabels:
       workload.user.cattle.io/workloadselector: apps.statefulset-default-statefulsets-ipfs-b1
-  serviceName: svc-ipfs-s4
+  serviceName: svc-ipfs-b1
   template:
     metadata:
       creationTimestamp: null

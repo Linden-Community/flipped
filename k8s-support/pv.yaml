@@ -130,6 +130,25 @@ spec:
     type: ""
   persistentVolumeReclaimPolicy: Retain
   volumeMode: Filesystem
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  annotations:
+    pv.kubernetes.io/bound-by-controller: "yes"
+  finalizers:
+  - kubernetes.io/pv-protection
+  name: pv-data-ipfs-s7
+spec:
+  accessModes:
+  - ReadWriteOnce
+  capacity:
+    storage: 100Gi
+  hostPath:
+    path: /data/ipfs-s7
+    type: ""
+  persistentVolumeReclaimPolicy: Retain
+  volumeMode: Filesystem
 
 
 
