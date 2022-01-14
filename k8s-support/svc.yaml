@@ -37,6 +37,10 @@ spec:
     port: 6001
     protocol: TCP
     targetPort: 6001
+  - name: server2
+    port: 6002
+    protocol: TCP
+    targetPort: 6002
   - name: peers
     nodePort: 30401
     port: 4001
