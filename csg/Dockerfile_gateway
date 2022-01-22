@@ -10,5 +10,5 @@ RUN npm i
 COPY mq mq
 COPY js-gateway/src src 
 
-CMD node src/gateway ${url} ${mongoUrl} ${mqServer}
+CMD node src/gateway2 ${url} ${mongoUrl} ${mqServer}
 # CMD sleep 36000
