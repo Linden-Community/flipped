@@ -1,5 +1,33 @@
 const express = require('express');
 const app = express();
+var jwt = require('express-jwt');
+var jwks = require('jwks-rsa');
+var jwtCheck = jwt({
+    secret: jwks.expressJwtSecret({
+        cache: true,
+        rateLimit: true,
+        jwksRequestsPerMinute: 5,
+        jwksUri: 'https://linden.authing.cn/oidc/.well-known/jwks.json',
+    }),
+    // audience: '617a439caf58aafc0f93cb8e',
+    issuer: 'https://linden.authing.cn/oidc',
+    algorithms: ['RS256'],
+    getToken: function fromHeaderOrQuerystring(req) {
+        if (req.headers['access-token']) {
+            return req.headers['access-token']
+        } else if (req.query && req.query['access-token']) {
+            return req.query['access-token']
+        }
+        return null
+    }
+});
+app.use(jwtCheck);
+app.use(function (err, req, res, next) {
+    if (err.name === 'UnauthorizedError') {
+        res.status(401).send({ code: 401, message: err.message });
+    }
+})
+
 const httpProxy = require('http-proxy');
 const apiProxy = httpProxy.createProxyServer();
 
@@ -59,6 +87,9 @@ apiProxy.on('proxyRes', function (proxyRes, req, res) {
 
 app.all("/poss/v2/*/ipfs/*", function (req, res) {
     console.log("req1:", req.url, new Date())
+    if (!req.user.scope.split(' ').includes('store:' + req.url.split("/")[3]+":*")) {
+        return res.status(401).json({ code: 401, message: 'Unauthorized! scope->' +  req.user.scope});
+    }
     res.url = req.url
     req.url = req.url.replace(/\/poss\/v2\/[^\/]+\/ipfs\//, "/ipfs/")
     apiProxy.web(req, res, {
@@ -68,6 +99,9 @@ app.all("/poss/v2/*/ipfs/*", function (req, res) {
 
 app.all("/poss/v2/*", function (req, res) {
     console.log("req2:", req.url, new Date())
+    if (!req.user.scope.split(' ').includes('store:' + req.url.split("/")[3]+":*")) {
+        return res.status(401).json({ code: 401, message: 'Unauthorized! scope->' +  req.user.scope});
+    }
     res.url = req.url
     req.url = req.url.replace(/\/poss\/v2\/[^\/]+\//, "/api/v0/")
     apiProxy.web(req, res, {

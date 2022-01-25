@@ -1,7 +1,9 @@
 {
   "dependencies": {
     "express": "^4.17.1",
+    "express-jwt": "^6.1.0",
     "http-proxy": "^1.18.1",
+    "jwks-rsa": "^2.0.5",
     "mongodb": "^3.6.6"
   }
 }
