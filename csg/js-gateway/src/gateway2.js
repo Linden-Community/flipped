@@ -85,9 +85,20 @@ apiProxy.on('proxyRes', function (proxyRes, req, res) {
     });
 });
 
+function checkScope(req, expect="") {
+    expect += " *"
+    let scopes = req.user.scope.split(' ')
+    let clientId = req.url.split("/")[3]
+    return expect.split(' ').some((v) => {
+        if  (scopes.includes(`store:${clientId}:${v}`)){
+            return true;
+        }
+    })
+}
+
 app.all("/poss/v2/*/ipfs/*", function (req, res) {
     console.log("req1:", req.url, new Date())
-    if (!req.user.scope.split(' ').includes('store:' + req.url.split("/")[3]+":*")) {
+    if (!checkScope(req, "read")) {
         return res.status(401).json({ code: 401, message: 'Unauthorized! scope->' +  req.user.scope});
     }
     res.url = req.url
@@ -97,9 +108,10 @@ app.all("/poss/v2/*/ipfs/*", function (req, res) {
     });
 });
 
+
 app.all("/poss/v2/*", function (req, res) {
     console.log("req2:", req.url, new Date())
-    if (!req.user.scope.split(' ').includes('store:' + req.url.split("/")[3]+":*")) {
+    if (!checkScope(req, "write")) {
         return res.status(401).json({ code: 401, message: 'Unauthorized! scope->' +  req.user.scope});
     }
     res.url = req.url

@@ -32,12 +32,22 @@ app.use(function (err, req, res, next) {
 })
 
 app.post('/poss/v2/*', function (req, res) {
-    console.log(req.url.split("/")[3])
     // 检验 AccessToken 是否具备所需要的权限项目
-    if (!req.user.scope.split(' ').includes('store:' + req.url.split("/")[3]+":*")) {
-        return res.status(401).json({ code: 401, message: 'Unauthorized! scope->' +  req.user.scope});
+    if (!checkScope(req, "read")) {
+        return res.status(401).json({ code: 401, message: 'Unauthorized! scope->' + req.user.scope });
     }
     res.send('Secured Resource');
 });
+
+function checkScope(req, expect="") {
+    expect += " *"
+    let scopes = req.user.scope.split(' ')
+    let clientId = req.url.split("/")[3]
+    return expect.split(' ').some((v) => {
+        if  (scopes.includes(`store:${clientId}:${v}`)){
+            return true;
+        }
+    })
+}
 
 app.listen(port);
