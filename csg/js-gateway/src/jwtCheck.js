@@ -1,9 +1,18 @@
-var express = require('express');
-var app = express();
-var jwt = require('express-jwt');
-var jwks = require('jwks-rsa');
-var port = process.env.PORT || 8080;
-var jwtCheck = jwt({
+const express = require('express');
+const app = express();
+app.all("*",function(req,res,next){
+    res.header("Access-Control-Allow-Origin","*");
+    res.header("Access-Control-Allow-Headers","content-type, access-token");
+    res.header("Access-Control-Allow-Methods","DELETE,PUT,POST,GET,OPTIONS");
+    if (req.method.toLowerCase() == 'options')
+        res.send(200); 
+    else
+        next();
+})
+const jwt = require('express-jwt');
+const jwks = require('jwks-rsa');
+const port = process.env.PORT || 8081;
+const jwtCheck = jwt({
     secret: jwks.expressJwtSecret({
         cache: true,
         rateLimit: true,
