@@ -185,7 +185,7 @@ spec:
         - configMapRef:
             name: cm-ipfs-poss
             optional: false
-        image: harbor.lindensys.com/lindencloud/sidecar-poss:v0.1
+        image: harbor.lindensys.com/lindencloud/sidecar-poss:v0.2
         imagePullPolicy: Always
         name: container-1
         resources:
