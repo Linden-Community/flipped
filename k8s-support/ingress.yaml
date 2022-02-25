@@ -68,13 +68,6 @@ spec:
             name: svc-ipfs-s1
             port:
               number: 6002
-        path: /poss/v2/babaofan
-        pathType: Prefix
-      - backend:
-          service:
-            name: svc-ipfs-s1
-            port:
-              number: 6002
         path: /poss/v2/ipfsnews
         pathType: Prefix
       - backend:
@@ -123,8 +116,8 @@ spec:
           service:
             name: svc-ipfs-s5
             port:
-              number: 6001
-        path: /poss/v1/babaofan
+              number: 6002
+        path: /poss/v2/babaofan
         pathType: Prefix
       - backend:
           service:
