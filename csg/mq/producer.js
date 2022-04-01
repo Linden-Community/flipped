@@ -24,6 +24,18 @@ const sender = {
                 console.log("mq return:", result);
             }
         });
+    },
+    sendWithTag: (tag, key, msg) => {
+        producer.send("eth", msg, {
+            keys: key,
+            tags: tag
+        }, function (err, result) {
+            if (err) {
+                console.log(err)
+            } else {
+                console.log("mq return:", result);
+            }
+        });
     }
 }
 

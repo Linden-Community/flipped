@@ -1,0 +1,20 @@
+version: "3.7"
+
+services:
+  ethServer:
+    build:
+      context: ../
+      dockerfile: Dockerfile_eth
+    image: $env_image
+    container_name: ethServer
+    restart: always
+    environment:
+      - wss=$env_wss
+      - address=$env_address
+      - mqServer=$env_mqServer
+      - tag=$env_tag
+networks:
+  default:
+    name: flipped_default
+
+
