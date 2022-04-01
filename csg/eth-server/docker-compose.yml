@@ -10,9 +10,9 @@ services:
     restart: always
     environment:
       - wss=$env_wss
-      - address=$env_address
+      - contract=$env_contract
       - mqServer=$env_mqServer
-      - tag=$env_tag
+      - chainId=$env_chainId
 networks:
   default:
     name: flipped_default

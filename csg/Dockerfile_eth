@@ -10,5 +10,5 @@ RUN npm i
 COPY mq mq
 COPY eth-server/src src 
 
-CMD node src/subscribe ${wss} ${address} ${mqServer} ${tag}
+CMD node src/subscribe ${wss} ${contract} ${mqServer} ${chainId}
 # CMD sleep 36000

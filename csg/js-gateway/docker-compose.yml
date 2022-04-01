@@ -15,5 +15,3 @@ services:
 networks:
   default:
     name: flipped_default
-
-
