@@ -13,7 +13,7 @@ provider.on('end', e => {
     provider.on('connect', function () {
         console.log('WSS Reconnected');
     });
-    
+
     web3.setProvider(provider);
 });
 const contract = args[1] || "0x0cd43FFF2a992E094E829B4b826fC67aBAe2D6E3"
@@ -22,21 +22,36 @@ const producer = require('../mq/producer');
 producer.init(args[2] || "127.0.0.1:30876")
 const chainId = args[3] || "97"
 
-var subscription = web3.eth.subscribe('logs', {
-    address: contract,
-    // topics: ['0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef']
-}, function (error, result) {
-    if (error) {
-        console.log("error:", error)
-    }
-    if (result) {
-        result.chainId = chainId
-        result.createAt = Date.now()
-        producer.sendWithTag(chainId, result.transactionHash, JSON.stringify(result))
-        console.log("sendMQ:", chainId, JSON.stringify(result))
-    }
-});
-
-
-
+function subscribe() {
+    let subscription = web3.eth.subscribe('logs', {
+        address: contract,
+        // topics: ['0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef']
+    }, function (error, result) {
+        if (error) {
+            console.log("error:", error)
+        }
+        if (result) {
+            result.chainId = chainId
+            result.createAt = Date.now()
+            producer.sendWithTag(chainId, result.transactionHash, JSON.stringify(result))
+            console.log("sendMQ:", chainId, JSON.stringify(result))
+        }
+    });
+    return subscription;
+}
+let subscription = subscribe()
 console.log("subscription:", subscription);
+
+provider.on('error', e => console.log('WS Error', e));
+provider.on('end', e => {
+    console.log('WS closed');
+    console.log('Attempting to reconnect...');
+    provider = new Web3.providers.WebsocketProvider(RINKEBY_WSS);
+
+    provider.on('connect', function () {
+        subscribe()
+        console.log('WSS Reconnected')
+    });
+
+    web3.setProvider(provider);
+});
