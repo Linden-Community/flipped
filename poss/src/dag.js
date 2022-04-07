@@ -25,8 +25,8 @@ module.exports = (options) => {
     return rst
   }
 
-  const getProof = async function (cid, privateKey) {
-    const data = await client.dag.get(cid)
+  const getProof = async function (cid, privateKey, options = {}) {
+    const data = await client.dag.get(cid, options)
     const publicKey = data.value.grantor
     const aesKey = aes.decrypt(privateKey, publicKey, data.value.encryptInfo)
     delete data.value.encryptInfo

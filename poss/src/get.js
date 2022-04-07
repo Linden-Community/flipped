@@ -9,16 +9,16 @@ module.exports = (options) => {
     const dag = Dag(options)
     const client = createClient(options)
 
-    const getData = async (cid) => {
+    const getData = async (cid, options = {}) => {
         const content = []
-        for await (const chunk of client.cat(cid)) {
+        for await (const chunk of client.cat(cid, options)) {
             content.push(Buffer.from(chunk))
         }
         return Buffer.concat(content)
     }
 
-    const getFile = async (path, cid) => {
-        for await (const file of client.get(cid)) {
+    const getFile = async (path, cid, options = {}) => {
+        for await (const file of client.get(cid, options)) {
             if (file.type != "file") console.error("this dag node is not a file")
             let ws = fs.createWriteStream(path);
             for await (const chunk of file.content) {
@@ -28,8 +28,8 @@ module.exports = (options) => {
         }
     }
 
-    const getAndDecrypt = async (path, cid, aesKey) => {
-        for await (const file of client.get(cid)) {
+    const getAndDecrypt = async (path, cid, aesKey, options = {}) => {
+        for await (const file of client.get(cid, options)) {
             if (file.type != "file") console.error("this dag node is not a file")
 
             const block = 262160
@@ -51,23 +51,23 @@ module.exports = (options) => {
         }
     }
 
-    const getEncryptedData = async (cid, privateKey) => {
-        const proof = await dag.getProof(cid, privateKey)
+    const getEncryptedData = async (cid, privateKey, options = {}) => {
+        const proof = await dag.getProof(cid, privateKey, options)
         const resourceCid = proof.Links[0].Hash
         const aesKey = proof.aesKey
         const encryptedData = await getData(resourceCid)
         return crypto.decrypt(encryptedData, aesKey).toString()
     }
 
-    const getEncryptedFile = async (path, cid, privateKey) => {
-        const proof = await dag.getProof(cid, privateKey)
+    const getEncryptedFile = async (path, cid, privateKey, options = {}) => {
+        const proof = await dag.getProof(cid, privateKey, options)
         const resourceCid = proof.Links[0].Hash
         const aesKey = proof.aesKey
-        await getAndDecrypt(path, resourceCid, aesKey)
+        await getAndDecrypt(path, resourceCid, aesKey, options)
     }
 
-    const getBuffer = async (cid) => {
-        for await (const file of client.get(cid)) {
+    const getBuffer = async (cid, options = {}) => {
+        for await (const file of client.get(cid, options)) {
             if (file.type != "file") console.error("this dag node is not a file")
             const content = []
             for await (const chunk of file.content) {
@@ -77,8 +77,8 @@ module.exports = (options) => {
         }
     }
 
-    const decryptBuffer = async (cid, aesKey) => {
-        for await (const file of client.get(cid)) {
+    const decryptBuffer = async (cid, aesKey, options = {}) => {
+        for await (const file of client.get(cid, options)) {
             if (file.type != "file") console.error("this dag node is not a file")
 
             let buf = Buffer.alloc(0)
@@ -100,11 +100,11 @@ module.exports = (options) => {
         }
     }
 
-    const getEncryptedBuffer = async (cid, privateKey) => {
-        const proof = await dag.getProof(cid, privateKey)
+    const getEncryptedBuffer = async (cid, privateKey, options = {}) => {
+        const proof = await dag.getProof(cid, privateKey, options)
         const resourceCid = proof.Links[0].Hash
         const aesKey = proof.aesKey
-        return await decryptBuffer(resourceCid, aesKey)
+        return await decryptBuffer(resourceCid, aesKey, options)
     }
 
     return {
