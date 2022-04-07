@@ -156,9 +156,9 @@ spec:
   externalTrafficPolicy: Cluster
   ports:
   - name: server
-    port: 6001
+    port: 6002
     protocol: TCP
-    targetPort: 6001
+    targetPort: 6002
   - name: peers
     nodePort: 30406
     port: 4001
