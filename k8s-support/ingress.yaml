@@ -86,6 +86,13 @@ spec:
         pathType: Prefix
       - backend:
           service:
+            name: svc-ipfs-s6
+            port:
+              number: 6002
+        path: /poss/v2/myspace
+        pathType: Prefix
+      - backend:
+          service:
             name: svc-ipfs-s2
             port:
               number: 6001
@@ -116,8 +123,8 @@ spec:
           service:
             name: svc-ipfs-s6
             port:
-              number: 6002
-        path: /poss/v2/myspace
+              number: 6001
+        path: /poss/v1/myspace
         pathType: Prefix
       - backend:
           service:

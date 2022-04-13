@@ -63,6 +63,8 @@ app.all("/poss/v1/*/ipfs/*", function (req, res) {
     req.url = req.url.replace(/\/poss\/v1\/[^\/]+\/ipfs\//, "/ipfs/")
     apiProxy.web(req, res, {
         target: "http://127.0.0.1:8080"
+    }, function (e) {
+        res.status(504).send({ code: 504, message: e.message });
     });
 });
 
@@ -72,6 +74,8 @@ app.all("/poss/v1/*", function (req, res) {
     req.url = req.url.replace(/\/poss\/v1\/[^\/]+\//, "/api/v0/")
     apiProxy.web(req, res, {
         target: proxyTarget
+    }, function (e) {
+        res.status(504).send({ code: 504, message: e.message });
     });
 });
 

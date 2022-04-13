@@ -1,11 +1,11 @@
 const express = require('express');
 const app = express();
-app.all("*",function(req,res,next){
-    res.header("Access-Control-Allow-Origin","*");
-    res.header("Access-Control-Allow-Headers","*");
-    res.header("Access-Control-Allow-Methods","DELETE,PUT,POST,GET,OPTIONS");
+app.all("*", function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "*");
+    res.header("Access-Control-Allow-Methods", "DELETE,PUT,POST,GET,OPTIONS");
     if (req.method.toLowerCase() == 'options')
-        res.send(200); 
+        res.send(200);
     else
         next();
 })
@@ -94,12 +94,12 @@ apiProxy.on('proxyRes', function (proxyRes, req, res) {
     });
 });
 
-function checkScope(req, expect="") {
+function checkScope(req, expect = "") {
     expect += " *"
     let scopes = req.user.scope.split(' ')
     let clientId = req.url.split("/")[3]
     return expect.split(' ').some((v) => {
-        if  (scopes.includes(`store:${clientId}:${v}`)){
+        if (scopes.includes(`store:${clientId}:${v}`)) {
             return true;
         }
     })
@@ -108,12 +108,14 @@ function checkScope(req, expect="") {
 app.all("/poss/v2/*/ipfs/*", function (req, res) {
     console.log("req1:", req.url, new Date())
     if (!checkScope(req, "read")) {
-        return res.status(401).json({ code: 401, message: 'Unauthorized! scope->' +  req.user.scope});
+        return res.status(401).json({ code: 401, message: 'Unauthorized! scope->' + req.user.scope });
     }
     res.url = req.url
     req.url = req.url.replace(/\/poss\/v2\/[^\/]+\/ipfs\//, "/ipfs/")
     apiProxy.web(req, res, {
         target: "http://127.0.0.1:8080"
+    }, function (e) {
+        res.status(504).send({ code: 504, message: e.message });
     });
 });
 
@@ -121,12 +123,14 @@ app.all("/poss/v2/*/ipfs/*", function (req, res) {
 app.all("/poss/v2/*", function (req, res) {
     console.log("req2:", req.url, new Date())
     if (!checkScope(req, "write")) {
-        return res.status(401).json({ code: 401, message: 'Unauthorized! scope->' +  req.user.scope});
+        return res.status(401).json({ code: 401, message: 'Unauthorized! scope->' + req.user.scope });
     }
     res.url = req.url
     req.url = req.url.replace(/\/poss\/v2\/[^\/]+\//, "/api/v0/")
     apiProxy.web(req, res, {
         target: proxyTarget
+    }, function (e) {
+        res.status(504).send({ code: 504, message: e.message });
     });
 });
 
