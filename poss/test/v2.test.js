@@ -24,8 +24,14 @@ describe('test v2', function () {
         console.log(rst.toString())
     })
 
-    it('get encryptedFile', async () => {
-        const privateKey = "5Jyb691zn225jivM4VVUrQ2JdZydq5Jpn3yjNznonaSXfmFMB4U"
-        await client.get.encryptedFile("/linden/temp/aaa.txt", "bafyreighe2no2wbgbcjnjtyz2ky4n7u6ucv7pwzv62tvfwav6vwwhqapta", privateKey)
-    })
+    // it('get encryptedFile', async () => {
+    //     const privateKey = "5Jyb691zn225jivM4VVUrQ2JdZydq5Jpn3yjNznonaSXfmFMB4U"
+    //     await client.get.encryptedFile("/linden/temp/aaa.txt", "bafyreighe2no2wbgbcjnjtyz2ky4n7u6ucv7pwzv62tvfwav6vwwhqapta", privateKey)
+    // })
+
+    // it('add proof', async () => {
+    //     const proof = await client.add.proof("bafyreift2xn2kjfae2norpbsirjwxwf6vgbdpncfvk74fx3u3sixztc4d4",
+    //         "5Jyb691zn225jivM4VVUrQ2JdZydq5Jpn3yjNznonaSXfmFMB4U", "EOS5PqCaKBWH6qYDqvVvbBCpwVwmLX1QvJJJLYgP49C8bZDhGiYMu", { "user": "0x9fA87f581D3821d4A51f167F56fE78cE7e0bA9B9" , "memo":  "testType_2", "access-token": token})
+    //     console.log('Added encryptedFile proof:', proof)
+    // })
 })
