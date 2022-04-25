@@ -13,8 +13,8 @@ let options = {
     },
     reconnect: {
         auto: true,
-        delay: 5000, // ms
-        maxAttempts: 5,
+        delay: 10000, // ms
+        maxAttempts: 60,
         onTimeout: false
     }
 }
