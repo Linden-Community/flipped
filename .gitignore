@@ -1,2 +1,4 @@
 .env
 deploy.sh
+.idea
+target/
