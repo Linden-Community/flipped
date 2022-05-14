@@ -1,4 +1,4 @@
-package com.lindensys.poss.sdk.util.eosecc;
+package com.lindensys.poss.sdk;
 
 import com.google.gson.annotations.Expose;
 
@@ -23,7 +23,7 @@ public class Nonce implements Serializable {
     }
 
     public Long getNonce() {
-        return high.longValue() << 32 | low.longValue();
+        return (high.longValue() << 32 | 0x00000000ffffffffL) & (low.longValue() | 0xffffffff00000000L);
     }
 
     public Integer getHigh() {

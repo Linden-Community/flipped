@@ -115,7 +115,7 @@ public class KeyUtils {
             throw new RuntimeException("Expected version 0x80, instead got " + Hex.toHexString(versionKey, 0, 1));
         }
         byte[] privateKey = Arrays.copyOfRange(versionKey, 1, versionKey.length);
-        return new PrivateKey(new BigInteger(privateKey));
+        return new PrivateKey(new BigInteger(1,privateKey));
     }
     /**
      * 从Base58的私钥字符串中解码为私钥对象

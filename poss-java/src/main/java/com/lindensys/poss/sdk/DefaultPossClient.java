@@ -8,13 +8,13 @@ import io.ipfs.api.NamedStreamable;
 import io.ipfs.cid.Cid;
 import io.ipfs.multibase.Multibase;
 import io.ipfs.multihash.Multihash;
+import org.bouncycastle.util.Arrays;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -32,6 +32,10 @@ public class DefaultPossClient implements PossClient {
     private static final String DEFAULT_HOST = "csg.lindensys.cn";
 
     private static final int DEFAULT_PORT = 80;
+
+    private static final int DECRYPT_BLOCK = 262160;
+
+    private static final int ENCRYPT_BLOCK = 262144;
 
     public DefaultPossClient(String clientId) {
         this.client = new IPFS(DEFAULT_HOST,DEFAULT_PORT,"/poss/v1/"+clientId + "/",false);
@@ -71,7 +75,7 @@ public class DefaultPossClient implements PossClient {
         return nodes.stream().map(node -> {
             FileInfo fileInfo = new FileInfo();
             fileInfo.setName(node.name.orElse(""));
-            fileInfo.setHash(node.hash.toBase58());
+            fileInfo.setHash(Hash.fromString(node.hash.toBase58()));
             fileInfo.setSize(node.largeSize.map(Long::parseLong).orElse(null));
             return fileInfo;
         }).collect(Collectors.toList());
@@ -103,7 +107,7 @@ public class DefaultPossClient implements PossClient {
 
     private EncryptedFileInfo addEncryptedExecute(byte[] data, String privateKeyStr, String fileName) throws Exception {
         String aesKey = KeyPair.generateNew().getPrivateKey().toString();
-        byte[] encryptedData = AesUtils.encrypt(data,aesKey);
+        byte[] encryptedData = encrypt(data,aesKey);
         FileInfo fileInfo = add(encryptedData,fileName);
         PrivateKey privateKey = KeyUtils.parsePrivateKey(privateKeyStr);
         PublicKey publicKey = privateKey.toPublic();
@@ -113,9 +117,7 @@ public class DefaultPossClient implements PossClient {
         CryptInfo cryptInfo = AesUtils.encrypt(privateKey,publicKey,aesKey.getBytes(StandardCharsets.UTF_8));
         proof.setEncryptInfo(cryptInfo);
         proof.getLinks().add(fileInfo);
-        String proofJson = new Gson().toJson(proof);
-        MerkleNode node = client.dag.put(proofJson.getBytes(StandardCharsets.UTF_8));
-        System.out.println(new Gson().toJson(node.hash));
+        MerkleNode node = client.dag.put("cbor",proof.toCborRaw());
         EncryptedFileInfo encryptedFileInfo = new EncryptedFileInfo();
         encryptedFileInfo.setCid(Multibase.encode(Multibase.Base.Base32,node.hash.toBytes()));
         encryptedFileInfo.setResource(fileInfo);
@@ -130,10 +132,33 @@ public class DefaultPossClient implements PossClient {
         PrivateKey privateKeyO = KeyUtils.parsePrivateKey(privateKey);
         PublicKey publicKey = KeyUtils.parsePublicKey(proof.getGrantor());
         CryptInfo cryptInfo = AesUtils.decrypt(privateKeyO,publicKey,proof.getEncryptInfo());
-        String aesKey = new String(Base64.getDecoder().decode(cryptInfo.getMessage()),StandardCharsets.UTF_8);
-        byte[] data = get(proof.getLinks().get(0).getHash());
-        return AesUtils.decrypt(data,aesKey);
+        String aesKey = new String(cryptInfo.getMessage(),StandardCharsets.UTF_8);
+        byte[] data = get(proof.getLinks().get(0).getHash().getHash());
+        return decrypt(data, aesKey);
+    }
+    
+    private byte[] encrypt(byte[] data, String aesKey) throws Exception {
+        byte[] encryptedData = new byte[0];
+        int location = 0;
+        while (location <= data.length) {
+            int end = Math.min(data.length,location + ENCRYPT_BLOCK);
+            byte[] block = Arrays.copyOfRange(data,location, end);
+            encryptedData = Arrays.concatenate(encryptedData,AesUtils.encrypt(block,aesKey));
+            location = location + ENCRYPT_BLOCK;
+        }
+        return encryptedData;
     }
 
-
+    private byte[] decrypt(byte[] data, String aesKey) throws Exception {
+        byte[] decryptedData = new byte[0];
+        int location = 0;
+        while (location <= data.length) {
+            int end = Math.min(data.length,location + DECRYPT_BLOCK);
+            byte[] block = Arrays.copyOfRange(data,location, end);
+            decryptedData = Arrays.concatenate(decryptedData,AesUtils.decrypt(block,aesKey));
+            location = location + DECRYPT_BLOCK;
+        }
+        return decryptedData;
+    }
+    
 }

@@ -1,5 +1,6 @@
 package com.lindensys.poss.sdk.util.eosecc;
 
+import com.lindensys.poss.sdk.CryptInfo;
 import com.lindensys.poss.sdk.util.BitUtils;
 import com.lindensys.poss.sdk.util.HashUtils;
 import org.bouncycastle.util.Arrays;
@@ -10,7 +11,6 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
-import java.util.Base64;
 
 /**
  * AES加解密工具类
@@ -56,7 +56,7 @@ public class AesUtils {
                 privateKey,
                 publicKey,
                 cryptInfo.getNonce().getNonce(),
-                Base64.getDecoder().decode(cryptInfo.getMessage()),
+                cryptInfo.getMessage(),
                 cryptInfo.getChecksum()
         );
     }

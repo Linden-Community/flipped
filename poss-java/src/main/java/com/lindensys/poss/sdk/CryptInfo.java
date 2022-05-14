@@ -1,6 +1,6 @@
-package com.lindensys.poss.sdk.util.eosecc;
+package com.lindensys.poss.sdk;
 
-import java.util.Base64;
+import com.google.gson.annotations.JsonAdapter;
 
 /**
  * 加密信息类
@@ -18,7 +18,8 @@ public class CryptInfo {
     /**
      * 加密后数据或解密后数据
      */
-    private final String message;
+    @JsonAdapter(MessageAdapter.class)
+    private final byte[] message;
 
     /**
      * 验证解密使用的散列计算整数值
@@ -27,7 +28,7 @@ public class CryptInfo {
 
     public CryptInfo(Long nonce, byte[] message, Long checksum) {
         this.nonce = new Nonce(nonce);
-        this.message = Base64.getEncoder().encodeToString(message);
+        this.message = message;
         this.checksum = checksum;
     }
 
@@ -35,7 +36,7 @@ public class CryptInfo {
         return nonce;
     }
 
-    public String getMessage() {
+    public byte[] getMessage() {
         return message;
     }
 

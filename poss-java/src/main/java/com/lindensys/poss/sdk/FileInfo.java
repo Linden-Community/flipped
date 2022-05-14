@@ -16,7 +16,7 @@ public class FileInfo implements Serializable {
     @SerializedName("Size")
     private Long size;
     @SerializedName("Hash")
-    private String hash;
+    private Hash hash;
 
     public String getName() {
         return name;
@@ -34,11 +34,11 @@ public class FileInfo implements Serializable {
         this.size = size;
     }
 
-    public String getHash() {
+    public Hash getHash() {
         return hash;
     }
 
-    public void setHash(String hash) {
+    public void setHash(Hash hash) {
         this.hash = hash;
     }
 }
