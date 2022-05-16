@@ -13,7 +13,7 @@ public class FileInfo implements Serializable {
     @SerializedName("Name")
     private String name;
 
-    @SerializedName("Size")
+    @SerializedName(value = "Size", alternate = "Tsize")
     private Long size;
     @SerializedName("Hash")
     private Hash hash;

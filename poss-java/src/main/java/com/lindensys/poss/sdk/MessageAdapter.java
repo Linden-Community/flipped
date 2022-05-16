@@ -14,7 +14,7 @@ import java.util.Base64;
 public class MessageAdapter extends TypeAdapter<byte[]> {
     @Override
     public void write(JsonWriter jsonWriter, byte[] bytes) throws IOException {
-
+        jsonWriter.jsonValue(Base64.getEncoder().encodeToString(bytes));
     }
 
     @Override

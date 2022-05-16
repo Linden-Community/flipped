@@ -1,6 +1,8 @@
 package com.lindensys.poss.sdk;
 
 import com.google.gson.Gson;
+import com.lindensys.poss.sdk.listener.Process;
+import com.lindensys.poss.sdk.listener.ProcessListener;
 import com.lindensys.poss.sdk.util.eosecc.*;
 import io.ipfs.api.IPFS;
 import io.ipfs.api.MerkleNode;
@@ -8,15 +10,19 @@ import io.ipfs.api.NamedStreamable;
 import io.ipfs.cid.Cid;
 import io.ipfs.multibase.Multibase;
 import io.ipfs.multihash.Multihash;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.util.Arrays;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.security.Security;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.stream.Collectors;
 
 /**
@@ -36,6 +42,8 @@ public class DefaultPossClient implements PossClient {
     private static final int DECRYPT_BLOCK = 262160;
 
     private static final int ENCRYPT_BLOCK = 262144;
+
+    private static final ExecutorService EXECUTOR = Executors.newWorkStealingPool(10);
 
     public DefaultPossClient(String clientId) {
         this.client = new IPFS(DEFAULT_HOST,DEFAULT_PORT,"/poss/v1/"+clientId + "/",false);
@@ -160,5 +168,147 @@ public class DefaultPossClient implements PossClient {
         }
         return decryptedData;
     }
-    
+
+    @Override
+    public String generateAesKey() {
+        return KeyPair.generateNew().getPrivateKey().toString();
+    }
+
+    @Override
+    public Future<InputStream> encryptData(InputStream inputStream, String aesKey, ProcessListener<InputStream> listener) {
+        boolean handleEvent = Objects.nonNull(listener);
+        return EXECUTOR.submit(() -> {
+            Security.addProvider(new BouncyCastleProvider());
+            if (handleEvent) {
+                EXECUTOR.execute(listener::onStart);
+            }
+            ByteArrayOutputStream encryptedData = new ByteArrayOutputStream(ENCRYPT_BLOCK);
+            try {
+                int size = inputStream.available();
+                int location = 0;
+                if (handleEvent) {
+                    int finalLocation = location;
+                    EXECUTOR.execute(() -> listener.onProcess(new Process(size, finalLocation)));
+                }
+                while (location < size) {
+                    byte[] blockData = new byte[ENCRYPT_BLOCK];
+                    int readLen = inputStream.read(blockData);
+                    if (readLen != ENCRYPT_BLOCK) {
+                        blockData = Arrays.copyOfRange(blockData,0, readLen);
+                    }
+                    encryptedData.write(AesUtils.encrypt(blockData,aesKey));
+                    location = location + readLen;
+                    if (handleEvent) {
+                        int finalLocation = location;
+                        EXECUTOR.execute(() -> listener.onProcess(new Process(size, finalLocation)));
+                    }
+                }
+            } catch (Exception e) {
+                if (handleEvent) {
+                    EXECUTOR.execute(() -> listener.onError("Encrypt process failed",e));
+                    return null;
+                } else {
+                    throw new RuntimeException("Encrypt process failed",e);
+                }
+            }
+            ByteArrayInputStream output = new ByteArrayInputStream(encryptedData.toByteArray());
+            if (handleEvent) {
+                EXECUTOR.execute(() -> listener.onComplete(output));
+            }
+            return output;
+        });
+    }
+
+    @Override
+    public Future<InputStream> decryptData(InputStream inputStream, String aesKey, ProcessListener<InputStream> listener) {
+        boolean handleEvent = Objects.nonNull(listener);
+        return EXECUTOR.submit(() -> {
+            Security.addProvider(new BouncyCastleProvider());
+            if (handleEvent) {
+                EXECUTOR.execute(listener::onStart);
+            }
+            ByteArrayOutputStream encryptedData = new ByteArrayOutputStream(DECRYPT_BLOCK);
+            try {
+                int size = inputStream.available();
+                int location = 0;
+                if (handleEvent) {
+                    int finalLocation = location;
+                    EXECUTOR.execute(() -> listener.onProcess(new Process(size, finalLocation)));
+                }
+                while (location < size) {
+                    byte[] blockData = new byte[DECRYPT_BLOCK];
+                    int readLen = inputStream.read(blockData);
+                    if (readLen != DECRYPT_BLOCK) {
+                        blockData = Arrays.copyOfRange(blockData,0, readLen);
+                    }
+                    encryptedData.write(AesUtils.decrypt(blockData,aesKey));
+                    location = location + readLen;
+                    if (handleEvent) {
+                        int finalLocation = location;
+                        EXECUTOR.execute(() -> listener.onProcess(new Process(size, finalLocation)));
+                    }
+                }
+            } catch (Exception e) {
+                if (handleEvent) {
+                    EXECUTOR.execute(() -> listener.onError("Encrypt process failed",e));
+                    return null;
+                } else {
+                    throw new RuntimeException("Encrypt process failed",e);
+                }
+            }
+            ByteArrayInputStream output = new ByteArrayInputStream(encryptedData.toByteArray());
+            if (handleEvent) {
+                EXECUTOR.execute(() -> listener.onComplete(output));
+            }
+            return output;
+        });
+    }
+
+    @Override
+    public String addProof(FileInfo fileInfo, String privateKeyStr) throws Exception {
+        String aesKey = KeyPair.generateNew().getPrivateKey().toString();
+        PrivateKey privateKey = KeyUtils.parsePrivateKey(privateKeyStr);
+        PublicKey publicKey = privateKey.toPublic();
+        Proof proof = new Proof();
+        proof.setGrantor(publicKey.toString());
+        proof.setGrantee(publicKey.toString());
+        CryptInfo cryptInfo = AesUtils.encrypt(privateKey,publicKey,aesKey.getBytes(StandardCharsets.UTF_8));
+        proof.setEncryptInfo(cryptInfo);
+        proof.getLinks().add(fileInfo);
+        MerkleNode node = client.dag.put("cbor",proof.toCborRaw());
+        return Multibase.encode(Multibase.Base.Base32,node.hash.toBytes());
+    }
+
+    @Override
+    public Proof getProof(String cid, String privateKeyStr) throws Exception {
+        byte[] dag = client.dag.get(Cid.decode(cid));
+        String json = new String(dag, StandardCharsets.UTF_8);
+        Proof proof = new Gson().fromJson(json, Proof.class);
+        PrivateKey privateKey = KeyUtils.parsePrivateKey(privateKeyStr);
+        PublicKey publicKey = KeyUtils.parsePublicKey(proof.getGrantor());
+        CryptInfo cryptInfo = AesUtils.decrypt(privateKey, publicKey, proof.getEncryptInfo());
+        proof.setEncryptInfo(cryptInfo);
+        return proof;
+    }
+
+    @Override
+    public String grant(String proofCid, String privateKeyStr, String publicKeyStr) throws Exception {
+        byte[] dag = client.dag.get(Cid.decode(proofCid));
+        String json = new String(dag, StandardCharsets.UTF_8);
+        Proof oldProof = new Gson().fromJson(json, Proof.class);
+        PrivateKey privateKey = KeyUtils.parsePrivateKey(privateKeyStr);
+        byte[] aesKey = AesUtils.decrypt(privateKey,
+                KeyUtils.parsePublicKey(oldProof.getGrantor()),
+                oldProof.getEncryptInfo()).getMessage();
+        PublicKey publicKey = KeyUtils.parsePublicKey(publicKeyStr);
+        Proof newProof = new Proof();
+        newProof.setGrantor(privateKey.toPublic().toString());
+        newProof.setGrantee(publicKeyStr);
+        CryptInfo cryptInfo = AesUtils.encrypt(privateKey,publicKey,aesKey);
+        newProof.setEncryptInfo(cryptInfo);
+        newProof.setLinks(oldProof.getLinks());
+        MerkleNode node = client.dag.put("cbor",newProof.toCborRaw());
+        return Multibase.encode(Multibase.Base.Base32,node.hash.toBytes());
+    }
+
 }

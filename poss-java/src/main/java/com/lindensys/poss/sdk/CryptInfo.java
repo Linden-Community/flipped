@@ -2,6 +2,8 @@ package com.lindensys.poss.sdk;
 
 import com.google.gson.annotations.JsonAdapter;
 
+import java.util.Base64;
+
 /**
  * 加密信息类
  *
@@ -38,6 +40,10 @@ public class CryptInfo {
 
     public byte[] getMessage() {
         return message;
+    }
+
+    public String getMessageString() {
+        return Base64.getEncoder().encodeToString(message);
     }
 
     public Long getChecksum() {
