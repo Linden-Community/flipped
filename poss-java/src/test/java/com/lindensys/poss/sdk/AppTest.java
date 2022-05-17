@@ -100,4 +100,12 @@ public class AppTest
         fos.close();
     }
 
+    @Test
+    public void cryptSample() throws IOException {
+        InputStream inputStream = Files.newInputStream(Paths.get("/Users/skyjourney/xoado/tool/test.jpg"));
+        String aesKey = AesUtils.generateAesKey();
+        CryptTask task = new CryptTask(aesKey, inputStream, CryptTask.Type.ENCRYPT);
+        InputStream encryptStream = task.start(null);
+    }
+
 }

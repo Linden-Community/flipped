@@ -136,4 +136,8 @@ public class AesUtils {
         return cipher;
     }
 
+    public static String generateAesKey() {
+        return KeyPair.generateNew().getPrivateKey().toString();
+    }
+
 }

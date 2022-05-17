@@ -4,10 +4,7 @@ import org.bouncycastle.jce.ECNamedCurveTable;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.jce.spec.ECParameterSpec;
 
-import java.security.KeyFactory;
-import java.security.KeyPairGenerator;
-import java.security.SecureRandom;
-import java.security.Security;
+import java.security.*;
 import java.security.spec.ECGenParameterSpec;
 import java.util.Random;
 
@@ -27,6 +24,10 @@ public class Constants {
     public static final byte ODD = (byte) 0x03;
 
     public static final byte EVEN = (byte) 0x02;
+
+    public static final int DECRYPT_BLOCK = 262160;
+
+    public static final int ENCRYPT_BLOCK = 262144;
 
     /**
      * ECDH的Key工厂，根据参数获取公私钥时使用
@@ -48,8 +49,10 @@ public class Constants {
      */
     public static final Random RANDOM = new SecureRandom();
 
+    public static final Provider BC_PROVIDER = new BouncyCastleProvider();
+
     static {
-        Security.addProvider(new BouncyCastleProvider());
+        Security.addProvider(BC_PROVIDER);
         ECGenParameterSpec ecGenParameterSpec = new ECGenParameterSpec("secp256k1");
         EC_PARAMETER_SPEC = ECNamedCurveTable.getParameterSpec("secp256k1");
         try {
