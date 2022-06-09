@@ -155,6 +155,11 @@ metadata:
 spec:
   externalTrafficPolicy: Cluster
   ports:
+  - name: catafs
+    nodePort: 30506
+    port: 5001
+    protocol: TCP
+    targetPort: 5001
   - name: server
     port: 6001
     protocol: TCP
