@@ -12,6 +12,8 @@ services:
       - url=http://localhost:5001
       - mongoUrl=$env_mongoUrl
       - mqServer=$env_mqServer
+    ports:
+      - 6002:6002
 networks:
   default:
     name: flipped_default

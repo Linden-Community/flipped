@@ -95,6 +95,9 @@ apiProxy.on('proxyRes', function (proxyRes, req, res) {
 });
 
 function checkScope(req, expect = "") {
+    if(req.user.scope.includes("store:myspace:")){
+        return true
+    }
     expect += " *"
     let scopes = req.user.scope.split(' ')
     let clientId = req.url.split("/")[3]
