@@ -2,7 +2,6 @@ package src
 
 import (
 	"io"
-	"liblindencloud/src/model"
 )
 
 type PossClient interface {
@@ -18,9 +17,9 @@ type PossClient interface {
 
 	Grant(proofCid, privateKey, publicKey string) (string, error)
 
-	AddProof(links model.FileInfo, privateKey, aesKey string) (string, error)
+	AddProof(cid, name, privateKey, aesKey string, size int64) (string, error)
 
-	GetProof(proofCid string) (model.ProofInfo, error)
+	GetProof(proofCid string) (string, error)
 
 	UploadProgress(randomFileID string) string
 

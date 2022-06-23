@@ -154,7 +154,7 @@ func (client DefaultPossClient) Grant(proofCid, privateKey, publicKey string) (n
 	return cid, nil
 }
 
-func (client DefaultPossClient) AddProof(fileInfo model.FileInfo, privateKey, aesKey string) (string, error) {
+func (client DefaultPossClient) AddProof(cid, name, privateKey, aesKey string, size int64) (string, error) {
 
 	publicK, err := PrivateKeyToPublicByEos(privateKey)
 	if nil != err {
@@ -168,9 +168,9 @@ func (client DefaultPossClient) AddProof(fileInfo model.FileInfo, privateKey, ae
 	// 上传凭证
 	p := new(model.ProofInfo)
 	p.EncryptInfo = &encryptRes
-	p.FileInfo[0].Hash.Cid = fileInfo.Hash.Cid
-	p.FileInfo[0].Name = fileInfo.Name
-	p.FileInfo[0].TSize = fileInfo.TSize
+	p.FileInfo[0].Hash.Cid = cid
+	p.FileInfo[0].Name = name
+	p.FileInfo[0].TSize = size
 	p.Grantee = publicK
 	p.Grantor = publicK
 
@@ -191,18 +191,18 @@ func (client DefaultPossClient) AddProof(fileInfo model.FileInfo, privateKey, ae
 	return value, nil
 }
 
-func (client DefaultPossClient) GetProof(proofCid string) (proofInfo model.ProofInfo, error error) {
+func (client DefaultPossClient) GetProof(proofCid string) (str string, error error) {
 
 	proof := make(map[string]interface{})
 	err := global.GetShell().DagGet(proofCid, &proof)
 	if err != nil {
 		fmt.Printf("get proof fail...")
-		return proofInfo, err
+		return "", err
 	}
 
-	model, err1 := proofToModel(proof)
+	model, err1 := proofToString(proof)
 	if err1 != nil {
-		return proofInfo, err1
+		return "", err1
 	}
 
 	return model, nil

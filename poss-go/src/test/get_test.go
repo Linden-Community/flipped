@@ -65,3 +65,9 @@ func TestUploadProgress(t *testing.T) {
 		fmt.Println(value)
 	}
 }
+
+func TestGetProof(t *testing.T) {
+	proof, err := client.GetProof("bafyreibizuavmk4bikh5yyns4ujxlxhetbysdq2gscdgqwvjtw5uhbw4l4")
+	fmt.Println("proof", proof)
+	fmt.Println("err", err)
+}

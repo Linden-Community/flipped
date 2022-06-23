@@ -73,3 +73,13 @@ func proofToModel(proof map[string]interface{}) (value model.ProofInfo, error er
 
 	return value, nil
 }
+
+// proofToString 凭证json转化string
+func proofToString(proof map[string]interface{}) (str string, error error) {
+	// 将原始凭证数据转化为json
+	bytes, err := json.Marshal(proof)
+	if err != nil {
+		return "", err
+	}
+	return string(bytes), nil
+}
