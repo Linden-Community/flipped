@@ -1,0 +1,8 @@
+version: "3.7"
+services:
+  ubuntu-plus:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    image: harbor.lindensys.com/lindencloud/ubuntu-plus:18.04
+    container_name: ubuntu-plus

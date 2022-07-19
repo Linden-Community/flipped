@@ -138,6 +138,6 @@ spec:
   - ReadWriteOnce
   resources:
     requests:
-      storage: 100Gi
+      storage: 2Ti
   storageClassName: local-path-raid10
   volumeMode: Filesystem
