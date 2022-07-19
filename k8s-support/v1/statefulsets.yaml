@@ -87,7 +87,7 @@ spec:
         volumeMounts:
         - mountPath: /data/ipfs
           name: vol0
-          subPath: data/ipfs1
+          subPath: data/ipfs-s1
       - env:
         - name: url
           value: http://127.0.0.1:5001
@@ -178,7 +178,7 @@ spec:
         volumeMounts:
         - mountPath: /data/ipfs
           name: vol0
-          subPath: data/ipfs2
+          subPath: data/ipfs-s2
       - env:
         - name: url
           value: http://127.0.0.1:5001
@@ -250,7 +250,7 @@ spec:
         volumeMounts:
         - mountPath: /data/ipfs
           name: vol0
-          subPath: data/ipfs3
+          subPath: data/ipfs-s3
       - env:
         - name: url
           value: http://127.0.0.1:5001
@@ -322,7 +322,7 @@ spec:
         volumeMounts:
         - mountPath: /data/ipfs
           name: vol0
-          subPath: data/ipfs4
+          subPath: data/ipfs-s4
       - env:
         - name: url
           value: http://127.0.0.1:5001
@@ -394,7 +394,7 @@ spec:
         volumeMounts:
         - mountPath: /data/ipfs
           name: vol0
-          subPath: data/ipfs5
+          subPath: data/ipfs-s5
       - env:
         - name: url
           value: http://127.0.0.1:5001
@@ -466,7 +466,7 @@ spec:
         volumeMounts:
         - mountPath: /data/ipfs
           name: vol0
-          subPath: data/ipfs6
+          subPath: data/ipfs-s6
       - env:
         - name: url
           value: http://127.0.0.1:5001
@@ -557,7 +557,7 @@ spec:
         volumeMounts:
         - mountPath: /data/ipfs
           name: vol0
-          subPath: data/ipfs7
+          subPath: data/ipfs-s7
       - env:
         - name: url
           value: http://127.0.0.1:5001
