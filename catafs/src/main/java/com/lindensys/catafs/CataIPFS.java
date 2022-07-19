@@ -217,10 +217,10 @@ public class CataIPFS extends IPFS {
             cataNode.setTime(System.currentTimeMillis());
             cataNodes.add(cataNode);
             String infsStr = JSONArray.toJSONString(cataNodes);
-            _write(cataFilePath, infsStr.getBytes());
             if (cataNode.getItem() == Item.MFS) {
                 _cp(from, to);
             }
+            _write(cataFilePath, infsStr.getBytes());
             recursionUpdate(to);
         }
 
@@ -235,14 +235,17 @@ public class CataIPFS extends IPFS {
                     .time(System.currentTimeMillis()).build();
             cataNodes.add(result);
             String infsStr = JSONArray.toJSONString(cataNodes);
-            _write(cataFilePath, infsStr.getBytes());
             _cp(from, to);
+            _write(cataFilePath, infsStr.getBytes());
             recursionUpdate(to);
         }
 
         private void _cpProof(String from, String to, FileType fileType, String memo, String origin, String cataFilePath, List<CataNode> cataNodes, String fileName) throws IOException {
             String str = new String(dag.get(Cid.decode(from.substring("/proof/".length()))));
             JSONObject jsonObject = JSON.parseObject(str);
+            if (jsonObject.getJSONObject("encryptInfo") == null) {
+                throw new RuntimeException("proof CID error: " + from + "Is not a valid proof CID address.");
+            }
 
             String cid = from.substring(from.lastIndexOf("/") + 1);
             CataNode result = CataNode.builder()
@@ -262,14 +265,15 @@ public class CataIPFS extends IPFS {
         }
 
         public void _cp(String from, String to) throws IOException {
-            String str = new String(retrieve("files/cp?arg=" + encodeValue(from) + "&arg=" + encodeValue(to) + "&parents=true"));
+//            String str = new String(retrieve("files/cp?arg=" + encodeValue(from) + "&arg=" + encodeValue(to) + "&parents=true"));
+            String str = new String(retrieve("files/cp?arg=" + encodeValue(from) + "&arg=" + encodeValue(to)));
             System.out.println(str);
         }
 
         protected void _write(String path, byte[] object) throws IOException {
 //            long start = System.currentTimeMillis();
             String prefix = protocol + "://" + host + ":" + port + version;
-            Multipart m = new Multipart(prefix + "files/write?arg=" + path + "&parents=true&create=true&truncate=true", "UTF-8");
+            Multipart m = new Multipart(prefix + "files/write?arg=" + encodeValue(path) + "&parents=true&create=true&truncate=true", "UTF-8");
             m.addFilePart("data", Paths.get(""), new NamedStreamable.ByteArrayWrapper(object));
             String res = m.finish();
 //            long end = System.currentTimeMillis();
@@ -346,6 +350,7 @@ public class CataIPFS extends IPFS {
                     return lsDir(path);
                 }
             } catch (Exception e) {
+                System.err.println("lsDir error.");
             }
 
             ArrayList<CataNode> cataNodes = new ArrayList<>();
@@ -456,9 +461,12 @@ public class CataIPFS extends IPFS {
                         .build();
             }
             if (!cataNode.getCid().equals(mfsNode.getHash())) {
+                //clone cataNode
+                cataNode = JSON.parseObject(JSON.toJSONString(cataNode), CataNode.class);
                 cataNode.setCid(mfsNode.getHash());
                 cataNode.setSize(mfsNode.getSize());
                 cataNode.setCount(mfsNode.getType() == 0 ? -1 : getCount("/ipfs/" + mfsNode.getHash()));
+                cataNode.setTime(System.currentTimeMillis());
             }
             return cataNode;
         }

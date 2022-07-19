@@ -17,7 +17,7 @@ import java.util.Map;
 @TestMethodOrder(MethodOrderer.MethodName.class)
 class CataIPFSTest {
     //ipfs version 0.12.2
-    private final CataIPFS ipfs = new CataIPFS(new MultiAddress("/ip4/127.0.0.1/tcp/5001"));
+    private final CataIPFS ipfs = new CataIPFS(new MultiAddress("/ip4/192.168.253.61/tcp/31944"));
 
     @Test
     public void a_mkdir() throws IOException {
@@ -40,6 +40,8 @@ class CataIPFSTest {
         ipfs.files.mkdirWithParents("0xaB069f281a15a3D0C2876F939331F4B63601cDBE/normal/a/&");
         List<CataNode> ls = ipfs.files.ls("/0xaB069f281a15a3D0C2876F939331F4B63601cDBE/normal/a");
         System.out.println(JSONArray.toJSONString(ls));
+
+        ipfs.files.mkdirWithParents("0x28874638e103d7957b07ab3c6ac006eb71168c18/normal/a a/b b/ c/ d");
     }
 
     @Test
@@ -83,12 +85,12 @@ class CataIPFSTest {
 
     @Test
     public void ls() throws IOException {
-        List<CataNode> ls = ipfs.files.ls("/0xaB069f281a15a3D0C2876F939331F4B63601cDBE/normal/dir1/aaa.txt");
+        List<CataNode> ls = ipfs.files.ls("/0xcE7cAac7Fe305317aedece86DaD39162E7217591");
         System.out.println(JSONArray.toJSONString(ls));
-        List<CataNode> ls2 = ipfs.files.ls("/0xaB069f281a15a3D0C2876F939331F4B63601cDBE/normal/dir1");
+        /*List<CataNode> ls2 = ipfs.files.ls("/0xaB069f281a15a3D0C2876F939331F4B63601cDBE/normal/dir1");
         System.out.println(JSONArray.toJSONString(ls2));
         List<CataNode> ls3 = ipfs.files.ls("/");
-        System.out.println(JSONArray.toJSONString(ls3));
+        System.out.println(JSONArray.toJSONString(ls3));*/
     }
 
     @Test
