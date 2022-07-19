@@ -1,0 +1,238 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-ipfs0
+  namespace: hz-ldy
+spec:
+  externalTrafficPolicy: Cluster
+  ports:
+  - name: server
+    nodePort: 30500
+    port: 5001
+    protocol: TCP
+    targetPort: 5001
+  - name: peers
+    nodePort: 30400
+    port: 4001
+    protocol: TCP
+    targetPort: 4001
+  - name: dweb
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    workload.user.cattle.io/workloadselector: apps.statefulset-default-statefulsets-ipfs0
+  sessionAffinity: None
+  type: NodePort
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-ipfs-s1
+  namespace: hz-ldy
+spec:
+  externalTrafficPolicy: Cluster
+  ports:
+  - name: server
+    port: 6001
+    protocol: TCP
+    targetPort: 6001
+  - name: server2
+    port: 6002
+    protocol: TCP
+    targetPort: 6002
+  - name: peers
+    nodePort: 30401
+    port: 4001
+    protocol: TCP
+    targetPort: 4001
+  selector:
+    workload.user.cattle.io/workloadselector: apps.statefulset-default-statefulsets-ipfs-s1
+  sessionAffinity: None
+  type: NodePort
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-ipfs-s2
+  namespace: hz-ldy
+spec:
+  externalTrafficPolicy: Cluster
+  ports:
+  - name: server
+    port: 6001
+    protocol: TCP
+    targetPort: 6001
+  - name: peers
+    nodePort: 30402
+    port: 4001
+    protocol: TCP
+    targetPort: 4001
+  selector:
+    workload.user.cattle.io/workloadselector: apps.statefulset-default-statefulsets-ipfs-s2
+  sessionAffinity: None
+  type: NodePort
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-ipfs-s3
+  namespace: hz-ldy
+spec:
+  externalTrafficPolicy: Cluster
+  ports:
+  - name: server
+    port: 6001
+    protocol: TCP
+    targetPort: 6001
+  - name: peers
+    nodePort: 30403
+    port: 4001
+    protocol: TCP
+    targetPort: 4001
+  selector:
+    workload.user.cattle.io/workloadselector: apps.statefulset-default-statefulsets-ipfs-s3
+  sessionAffinity: None
+  type: NodePort
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-ipfs-s4
+  namespace: hz-ldy
+spec:
+  externalTrafficPolicy: Cluster
+  ports:
+  - name: server
+    port: 6001
+    protocol: TCP
+    targetPort: 6001
+  - name: peers
+    nodePort: 30404
+    port: 4001
+    protocol: TCP
+    targetPort: 4001
+  - name: dweb
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    workload.user.cattle.io/workloadselector: apps.statefulset-default-statefulsets-ipfs-s4
+  sessionAffinity: None
+  type: NodePort
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-ipfs-s5
+  namespace: hz-ldy
+spec:
+  externalTrafficPolicy: Cluster
+  ports:
+  - name: server
+    port: 6002
+    protocol: TCP
+    targetPort: 6002
+  - name: peers
+    nodePort: 30405
+    port: 4001
+    protocol: TCP
+    targetPort: 4001
+  - name: dweb
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    workload.user.cattle.io/workloadselector: apps.statefulset-default-statefulsets-ipfs-s5
+  sessionAffinity: None
+  type: NodePort
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-ipfs-s6
+  namespace: hz-ldy
+spec:
+  externalTrafficPolicy: Cluster
+  ports:
+  - name: catafs
+    nodePort: 30506
+    port: 5001
+    protocol: TCP
+    targetPort: 5001
+  - name: server
+    port: 6001
+    protocol: TCP
+    targetPort: 6001
+  - name: server2
+    port: 6002
+    protocol: TCP
+    targetPort: 6002
+  - name: peers
+    nodePort: 30406
+    port: 4001
+    protocol: TCP
+    targetPort: 4001
+  - name: dweb
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    workload.user.cattle.io/workloadselector: apps.statefulset-default-statefulsets-ipfs-s6
+  sessionAffinity: None
+  type: NodePort
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-ipfs-s7
+  namespace: hz-ldy
+spec:
+  externalTrafficPolicy: Cluster
+  ports:
+  - name: server
+    port: 6001
+    protocol: TCP
+    targetPort: 6001
+  - name: peers
+    nodePort: 30407
+    port: 4001
+    protocol: TCP
+    targetPort: 4001
+  - name: dweb
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    workload.user.cattle.io/workloadselector: apps.statefulset-default-statefulsets-ipfs-s7
+  sessionAffinity: None
+  type: NodePort
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-ipfs-b1
+  namespace: hz-ldy
+spec:
+  externalTrafficPolicy: Cluster
+  ports:
+  - name: server
+    port: 5001
+    protocol: TCP
+    targetPort: 5001
+    nodePort: 30301
+  - name: peers
+    nodePort: 30201
+    port: 4001
+    protocol: TCP
+    targetPort: 4001
+  - name: default
+    port: 8089
+    protocol: TCP
+    targetPort: 8089
+  selector:
+    workload.user.cattle.io/workloadselector: apps.statefulset-default-statefulsets-ipfs-b1
+  sessionAffinity: None
+  type: NodePort

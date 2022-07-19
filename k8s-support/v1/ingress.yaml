@@ -1,0 +1,156 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/proxy-body-size: 2g
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+  name: ingress-dweb
+  namespace: hz-ldy
+spec:
+  tls:
+  - hosts:
+    - dweb.lindensys.cn
+    secretName: dweb.lindensys.cn
+  rules:
+  - host: dweb.lindensys.cn
+    http:
+      paths:
+      - backend:
+          service:
+            name: svc-ipfs0
+            port:
+              number: 8080
+        path: /
+        pathType: Prefix
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/proxy-body-size: 2g
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+  name: ingress-csg
+  namespace: hz-ldy
+spec:
+  tls:
+  - hosts:
+    - csg.lindensys.cn
+    secretName: csg.lindensys.cn
+  rules:
+  - host: csg.lindensys.cn
+    http:
+      paths:
+      - backend:
+          service:
+            name: svc-ipfs0
+            port:
+              number: 5001
+        path: /api/v0
+        pathType: Prefix
+      - backend:
+          service:
+            name: svc-ipfs-s1
+            port:
+              number: 6001
+        path: /poss/v1/linden
+        pathType: Prefix
+      - backend:
+          service:
+            name: svc-ipfs-s1
+            port:
+              number: 6002
+        path: /poss/v2/linden
+        pathType: Prefix
+      - backend:
+          service:
+            name: svc-ipfs-s1
+            port:
+              number: 6002
+        path: /poss/v2/ipfsnews
+        pathType: Prefix
+      - backend:
+          service:
+            name: svc-ipfs-s1
+            port:
+              number: 6002
+        path: /poss/v2/testnet
+        pathType: Prefix
+      - backend:
+          service:
+            name: svc-ipfs-s1
+            port:
+              number: 6002
+        path: /poss/v2/xoado
+        pathType: Prefix
+      - backend:
+          service:
+            name: svc-ipfs-s6
+            port:
+              number: 6002
+        path: /poss/v2/myspace
+        pathType: Prefix
+      - backend:
+          service:
+            name: svc-ipfs-s2
+            port:
+              number: 6001
+        path: /poss/v1/testnet
+        pathType: Prefix
+      - backend:
+          service:
+            name: svc-ipfs-s3
+            port:
+              number: 6001
+        path: /poss/v1/xoado
+        pathType: Prefix
+      - backend:
+          service:
+            name: svc-ipfs-s4
+            port:
+              number: 6001
+        path: /poss/v1/ipfsnews
+        pathType: Prefix
+      - backend:
+          service:
+            name: svc-ipfs-s5
+            port:
+              number: 6002
+        path: /poss/v2/babaofan
+        pathType: Prefix
+      - backend:
+          service:
+            name: svc-ipfs-s6
+            port:
+              number: 6001
+        path: /poss/v1/myspace
+        pathType: Prefix
+      - backend:
+          service:
+            name: svc-ipfs-s7
+            port:
+              number: 6001
+        path: /poss/v1/goaskme
+        pathType: Prefix
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+  name: pinion
+  namespace: hz-ldy
+spec:
+  rules:
+    - host: csg.lindensys.cn
+      http:
+        paths:
+          - backend:
+              service:
+                name: svc-ipfs-b1
+                port:
+                  number: 8089
+            path: /pinion
+            pathType: Prefix       
